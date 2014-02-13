@@ -16,6 +16,7 @@ gem 'rolify'
 gem 'sendgrid'
 gem 'simple_form'
 gem 'thin'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
@@ -27,6 +28,7 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'pry'
 end
 group :test do
   gem 'capybara'
