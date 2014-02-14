@@ -1,7 +1,7 @@
 .container
   .col-md-6
     - if user_signed_in?
-      %p Welcome to Cobweb #{current_user.name_or_email}
+      %p.lead Welcome to Cobweb #{current_user.name_or_email}
     - else
       = render :template => '/devise/sessions/new'
   .col-md-6
