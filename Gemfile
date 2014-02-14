@@ -15,7 +15,7 @@ gem 'pg'
 gem 'rolify'
 gem 'sendgrid'
 gem 'simple_form'
-gem 'thin'
+gem 'unicorn'
 
 gem 'geocoder'
 
