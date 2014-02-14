@@ -1,0 +1,12 @@
+- if @postcode
+  %h1 Projects near #{ @postcode }
+
+%table.table.table-striped
+  %tr
+    %th Project Name
+    %th Location
+    %th # of Properties
+    %th Running since
+    %th Join
+  = render @projects
+

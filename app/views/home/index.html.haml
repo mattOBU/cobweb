@@ -1,4 +1,11 @@
-%h3 Home
-- @users.each do |user|
-  %p
-    User: #{link_to user.name, user}
+.container
+  .col-md-6
+    = render :template => '/devise/sessions/new'
+  .col-md-6
+    .authform
+      = form_tag "/projects/search", method: :get, html: { role: 'form' } do
+        .form-group
+          = label_tag :postcode
+          = text_field_tag :postcode, nil, :class => "form-control"
+
+        = submit_tag 'Search', :class => "button right"
