@@ -16,6 +16,7 @@ gem 'rolify'
 gem 'sendgrid'
 gem 'simple_form'
 gem 'unicorn'
+gem 'rack-timeout'
 
 gem 'geocoder'
 
