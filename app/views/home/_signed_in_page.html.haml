@@ -15,7 +15,7 @@
 
       %li.actions
         .pull-left
-          = button_to "New group", new_project_path, class: "btn btn-primary"
+          = button_to "New group", new_project_path, method: :get, class: "btn btn-primary"
         .pull-right
           = button_to_function "Groups near me", "$('#postcode_search').removeClass('hidden')", class: "btn btn-primary"
 
@@ -36,6 +36,6 @@
               %th Address
             = render partial: 'property_condensed', collection: current_user.properties
 
-          = button_to "Add building", new_property_path, class: "btn btn-primary"
+          = button_to "Add building", new_property_path, method: :get, class: "btn btn-primary"
 
 
