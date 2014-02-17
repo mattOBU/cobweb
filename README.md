@@ -26,10 +26,26 @@ The application is configured to send email using a SendGrid account.
 
 Email delivery is disabled in development.
 
+
+Deploy
+------
+
+Currently the application is deployed to Heroku at: http://stark-springs-1195.herokuapp.com/
+
+
 Getting Started
 ---------------
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+* Remember to set up your .env with at least the following variables:
+
+```
+ADMIN_NAME=First User
+ADMIN_EMAIL=user@example.com
+ADMIN_PASSWORD=changeme
+ROLES=[admin, user, VIP]
+PORT=3031
+```
+
 
 Documentation and Support
 -------------------------
