@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140214095428) do
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
+    t.text     "description"
   end
 
   create_table "properties", force: true do |t|
