@@ -6,5 +6,6 @@ Cobweb::Application.routes.draw do
   resources :users
   resources :projects do
     get 'search', on: :collection
+    resources :applications, controller: 'project_applications'
   end
 end
