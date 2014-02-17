@@ -1,0 +1,41 @@
+%p.lead
+  Welcome to Cobweb, #{current_user.name_or_email}
+
+.row
+  .col-md-6
+    %ul.list-unstyled
+      %li.groups
+        %h3 My groups
+
+        %table.table.table-striped
+          %tr
+            %th Project Name
+            %th Location
+          = render partial: 'project_condensed', collection: current_user.projects
+
+      %li.actions
+        .pull-left
+          = button_to "New group", new_project_path, class: "btn btn-primary"
+        .pull-right
+          = button_to_function "Groups near me", "$('#postcode_search').removeClass('hidden')", class: "btn btn-primary"
+
+      %li.postcodes{style: "margin-top: 50px;"}
+
+        #postcode_search.hidden
+          = render partial: '/shared/postcode_search'
+
+  .col-md-6
+    %ul.list-unstyled
+      %li.properties
+        .row
+          %h3 My buildings
+
+          %table.table.table-striped
+            %tr
+              %th Number / Name
+              %th Address
+            = render partial: 'property_condensed', collection: current_user.properties
+
+          = button_to "Add building", new_property_path, class: "btn btn-primary"
+
+

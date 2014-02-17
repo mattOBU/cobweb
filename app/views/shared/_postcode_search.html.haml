@@ -1,0 +1,9 @@
+.authform
+  = form_tag "/projects/search", method: :get, html: { role: 'form' } do
+    %h3 Search groups near me
+    .form-group
+      = label_tag :postcode
+      = text_field_tag :postcode, nil, class: "form-control"
+
+    = submit_tag 'Search', class: "button right"
+
