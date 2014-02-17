@@ -3,5 +3,7 @@
   %td= project.location
   %td= project.properties.count
   %td= project.running_since
-  %td= button_to "Apply", project_applications_path(project), method: :post, class: "btn btn-sm btn-success"
+  %td
+    - unless current_user.try(:member_of?, project)
+      = button_to "Apply", project_applications_path(project), method: :post, class: "btn btn-sm btn-success"
 
