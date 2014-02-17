@@ -30,7 +30,7 @@ Email delivery is disabled in development.
 Deploy
 ------
 
-Currently the application is deployed to Heroku at: http://stark-springs-1195.herokuapp.com/
+Currently the application is deployed to Heroku as [stark-springs-1195](http://stark-springs-1195.herokuapp.com/)
 
 
 Getting Started
