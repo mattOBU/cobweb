@@ -1,11 +1,21 @@
 %tr
   %td= member.name
-  %td= member.level
   %td
-    %button.btn.btn-default.btn-sm
-      %i.glyphicon.glyphicon-pencil
-      Edit
-    %button.btn.btn-danger.btn-sm
-      %i.glyphicon.glyphicon-trash
-      Remove
-
+    - if current_user.try(:has_role?, :owner, @project) && (current_user != member)
+      .btn-group
+        %button.btn.btn-default.btn-sm.dropdown-toggle{ type: "button", :"data-toggle" => "dropdown"} 
+          %i.glyphicon.glyphicon-pencil
+          = member.role_for @project
+          %span.caret
+        %ul.dropdown-menu{ role: "menu" }
+          %li
+            %a{ href: "#" } Member
+          %li
+            %a{ href: "#" } Admin
+          %li.divider
+          %li
+            %a{ href: "#" }
+              %i.glyphicon.glyphicon-trash
+              Remove
+    - else
+      = member.role_for @project
