@@ -18,6 +18,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     if @project.save
       @project.members << current_user
+      current_user.add_role :owner, @project
       redirect_to @project, notice: "Your new project was successfully created"
     else
       redirect_to :index
