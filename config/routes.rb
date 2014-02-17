@@ -8,4 +8,7 @@ Cobweb::Application.routes.draw do
     get 'search', on: :collection
     resources :applications, controller: 'project_applications'
   end
+
+  resources :properties
+
 end
