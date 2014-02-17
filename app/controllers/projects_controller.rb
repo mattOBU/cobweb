@@ -14,4 +14,19 @@ class ProjectsController < ApplicationController
     render :index
   end
 
+  def create
+    @project = Project.new(project_params)
+    if @project.save
+      @project.members << current_user
+      redirect_to @project, notice: "Your new project was successfully created"
+    else
+      redirect_to :index
+    end
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:location, :name, :description)
+  end
 end
