@@ -1,0 +1,32 @@
+.container
+  %h1 Enter building data
+  = form_for @property, html: { class: "form-inline" } do |f|
+    .form-group
+      = f.label :street_number, class: "sr-only"
+      = f.text_field :street_number, class: "form-control", placeholder: "Street Number / Name"
+    .form-group
+      = f.label :postcode, class: "sr-only"
+      = f.text_field :postcode, class: "form-control", placeholder: "Postcode"
+    .form-group
+      = f.label :building_type, class: "sr-only"
+      = f.text_field :building_type, class: "form-control", placeholder: "Building Type"
+    .form-group
+      = f.label :year_of_construction, class: "sr-only"
+      = f.text_field :year_of_construction, class: "form-control", placeholder: "Year of Construction"
+    .form-group
+      = f.label :number_of_occupants, class: "sr-only"
+      = f.text_field :number_of_occupants, class: "form-control", placeholder: "# of occupants"
+    .form-group
+      = f.label :floor_area, class: "sr-only"
+      = f.text_field :floor_area, class: "form-control", placeholder: "floor area"
+
+  %table.table.table-striped
+    %tr
+      %th &nbsp;
+      %th Gas
+      %th Electricity
+    - %w( Q1 Q2 Q3 Q4).each do |q|
+      %tr
+        %th= q
+        %td= text_field_tag "#{q}_gas"
+        %td= text_field_tag "#{q}_electricity"
