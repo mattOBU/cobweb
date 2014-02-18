@@ -1,0 +1,12 @@
+= form_for Project.new, method: :post do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: "form-control"
+  .form-group
+    = f.label :location
+    = f.text_field :location, class: "form-control"
+  .form-group
+    = f.label :description
+    = f.text_area :description, class: "form-control"
+
+  = f.submit "Create", class: "button right btn btn-primary"

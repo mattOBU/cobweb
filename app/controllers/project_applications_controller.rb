@@ -1,4 +1,8 @@
 class ProjectApplicationsController < ApplicationController
+  def new
+    @project = Project.new
+  end
+
   def create
     project = Project.find(params[:project_id])
     app = ProjectApplication.new(user: current_user, project: project)
