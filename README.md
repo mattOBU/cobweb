@@ -1,6 +1,8 @@
 Cobweb
 =========
 
+Cobweb prototype application, implementing the wireframes provided
+[here](http://prezi.com/64mbi6llbbm4/the-cobweb-tree-v2/)
 
 
 Database
