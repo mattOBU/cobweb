@@ -1,4 +1,4 @@
-class Manage::GroupsController < ApplicationController
+class Manage::CommunityGroupsController < ApplicationController
   def index
     @community_groups = CommunityGroup.all
   end
