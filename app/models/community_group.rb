@@ -26,4 +26,8 @@ class CommunityGroup < ActiveRecord::Base
     (members + admins).uniq
   end
 
+  def contact_name
+    admins.first.name_or_email unless admins.empty?
+  end
+
 end
