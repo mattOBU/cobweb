@@ -1,0 +1,37 @@
+.row
+  .col-md-6
+    %ul.list-unstyled
+      %li.groups
+        %h3 Community Groups Near Me
+
+        %table.table.table-striped
+          %tr
+            %th Community Group Name
+            %th Location
+          = render partial: 'community_group_condensed', collection: current_user.community_groups
+
+      %li.actions
+        .pull-left
+          = button_to "New group", new_community_group_path, method: :get, class: "btn btn-primary"
+        .pull-right
+          = button_to_function "Groups near me", "$('#postcode_search').removeClass('hidden')", class: "btn btn-primary"
+
+      %li.postcodes{style: "margin-top: 50px;"}
+
+        #postcode_search.hidden
+          = render partial: '/shared/postcode_search'
+
+  .col-md-6
+    %ul.list-unstyled
+      %li.buildings
+        .row
+          %h3 My buildings
+
+          %table.table.table-striped
+            %tr
+              %th Number / Name
+              %th Address
+            = render partial: 'building_condensed', collection: current_user.buildings
+
+          = button_to "Add building", new_building_path, method: :get, class: "btn btn-primary"
+

@@ -1,6 +1,6 @@
 .authform
-  = form_tag "/projects/search", method: :get, html: { role: 'form' } do
-    %h3 Search groups near me
+  = form_tag search_community_groups_path, method: :get, html: { role: 'form' } do
+    %h3 Search community groups near me
     .form-group
       = label_tag :postcode
       = text_field_tag :postcode, nil, class: "form-control"

@@ -1,0 +1,9 @@
+%tr
+  %td= link_to community_group.name, community_group
+  %td= community_group.location
+  %td= community_group.buildings.count
+  %td= community_group.running_since
+  %td
+    - unless current_user.member_of?, community_group
+      = button_to "Apply", community_group_applications_path(community_group), method: :post, class: "btn btn-sm btn-success"
+

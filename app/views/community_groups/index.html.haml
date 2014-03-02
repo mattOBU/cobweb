@@ -1,0 +1,18 @@
+.container
+  - if @postcode
+    %h1 Community Groups near #{ @postcode }
+
+  .row
+    %table.table.table-striped
+      %tr
+        %th Name
+        %th Location
+        %th # of Buildings
+        %th Running since
+        %th Join
+      = render @community_groups
+  .row
+    %p.lead
+      Or create a new Community Group:
+    .well
+      = render partial: 'community_groups/form'

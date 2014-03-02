@@ -1,7 +1,7 @@
 .container
   %h1
-    Project:
-    = @project.name
+    Community Group:
+    = @community_group.name
 
   .col-md-6
     %h2 Members
@@ -12,10 +12,10 @@
           %th Name
           %th Access Level
       %tbody
-        = render partial: 'member', collection: @project.members
+        = render partial: 'member', collection: @community_group.members
 
   .col-md-6
-    %h2 Properties
+    %h2 Buildings
 
     %table.table.table-striped
       %thead
@@ -40,4 +40,4 @@
             %sup 2
           %th Occupant
       %tbody
-        = render partial: "property", collection: @project.properties
+        = render partial: "building", collection: @community_group.buildings

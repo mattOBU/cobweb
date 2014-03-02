@@ -4,11 +4,19 @@ Cobweb::Application.routes.draw do
     registrations: "registrations"
   }
   resources :users
-  resources :projects do
+
+  resources :community_groups do
     get 'search', on: :collection
-    resources :applications, controller: 'project_applications'
+    resources :applications, controller: 'community_group_applications'
   end
 
-  resources :properties
+  resources :buildings
+
+  # Manage Cobweb routes
+  namespace :manage do
+    resources :groups, only: [ :index ]
+    resources :retrofit_providers, only: [ :index ]
+    resources :housing_providers, only: [ :index ]
+  end
 
 end

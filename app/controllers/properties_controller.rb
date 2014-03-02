@@ -1,14 +1,14 @@
-class PropertiesController < ApplicationController
+class BuildingsController < ApplicationController
   def new
-    @property = Property.new
+    @building = Building.new
     render action: :edit
   end
 
   def edit
-    @property = Property.find(params[:id])
-    authorize! :write, @property
+    @building = Building.find(params[:id])
+    authorize! :write, @building
   end
   def show
-    @property = Property.find(params[:id])
+    @building = Building.find(params[:id])
   end
 end

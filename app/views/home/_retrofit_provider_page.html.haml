@@ -1,0 +1,39 @@
+.col-md-4
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        %h4 I want to promote carbon reduction in homes, businesses or communities
+      .panel-body
+        %p
+          Identify and promote retrofit opportunities to reduce CO2 emissions
+        %p
+          Identify potential customers for installation of retrofit measures
+          or delivery of ECO and Green Deal
+
+        %button.btn.btn-primary.btn-lg
+          Domestic
+        %button.btn.btn-primary.btn-lg
+          Non-domestic
+        %button.btn.btn-primary.btn-lg
+          Post publicly
+
+.col-md-4
+  .col-md-12
+    = render partial: 'group_energy'
+  .col-md-12
+    = render partial: 'building_energy'
+  .col-md-12
+    = render partial: 'manage_account'
+  .col-md-6
+    = render partial: 'about_carbon_factors'
+  .col-md-6
+    = render partial: 'weather_data'
+.col-md-4
+  .col-md-12
+    = render partial: 'explore_building_energy'
+  .col-md-12
+    = render partial: 'explore_local_energy'
+  .col-md-12
+    = render partial: 'building_database'
+
+

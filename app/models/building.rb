@@ -1,9 +1,11 @@
-class Property < ActiveRecord::Base
+class Building < ActiveRecord::Base
   geocoded_by :postcode
   after_validation :geocode, if: -> (obj) {
     obj.postcode.present? && obj.postcode_changed? }
 
-  belongs_to :project
+  belongs_to :user
+
+  # TODO add association with retrofit provider
 
   def address
     "#{street_number} #{postcode}"

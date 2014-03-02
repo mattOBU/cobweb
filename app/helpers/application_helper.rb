@@ -24,4 +24,17 @@ module ApplicationHelper
     @devise_mapping ||= Devise.mappings[:user]
   end
 
+  # FIXME: make it dynamic
+  def current_role
+    current_user.roles.last
+  end
+
+  def is_business?
+    current_role == 'business'
+  end
+
+  def is_homeowner?
+    current_role == 'homeowner'
+  end
+
 end

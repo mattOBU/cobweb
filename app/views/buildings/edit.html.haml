@@ -1,6 +1,6 @@
 .container
   %h1 Enter building data
-  = form_for @property, html: { class: "form-inline" } do |f|
+  = form_for @building, html: { class: "form-inline" } do |f|
     .form-group
       = f.label :street_number, class: "sr-only"
       = f.text_field :street_number, class: "form-control", placeholder: "Street Number / Name"
