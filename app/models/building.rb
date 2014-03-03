@@ -8,7 +8,7 @@ class Building < ActiveRecord::Base
   # TODO add association with retrofit provider
 
   def address
-    "#{street_number} #{postcode}"
+    "#{street_number} #{street}, #{postcode} #{city}"
   end
 
   def co2_m2
