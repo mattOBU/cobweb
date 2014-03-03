@@ -6,7 +6,10 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # TODO revisit the association between users and buildings
+  # homeowner and businesses shouldn't be allowed to "have many"
+  # buildings nor any building group
   has_many :buildings
+  has_many :building_groups
 
   def community_groups
     CommunityGroup.with_roles([:member, :group_admin], self)
