@@ -30,6 +30,8 @@ class CommunityGroupsController < ApplicationController
   private
 
   def community_group_params
-    params.require(:community_group).permit(:location, :name, :description)
+    params.
+      require(:community_group).
+      permit(:location, :name, :description)
   end
 end
