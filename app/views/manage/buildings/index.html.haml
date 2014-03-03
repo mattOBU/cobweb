@@ -1,0 +1,37 @@
+.col-md-8
+  %h4 Individual buildings
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Building name
+        %th Address
+        %th Building group
+    %tbody
+      - @buildings.each do |building|
+        %tr
+          %td= building.name
+          %td= building.address
+          %td= building.building_group.name
+
+  %h4 Building groups
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Group name
+        %th Sector
+        %th Location details
+    %tbody
+      - @building_groups.each do |building_group|
+        %tr
+          %td= building_group.name
+          %td
+            = building_group.sector
+            (#{building_group.category})
+          %td
+            = building_group.location
+            (#{building_group.granularity})
+.col-md-4
+
+  %img.img-thumbnail{ src: "http://placekitten.com/g/512/512" }

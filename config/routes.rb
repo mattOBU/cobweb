@@ -17,6 +17,7 @@ Cobweb::Application.routes.draw do
     resources :community_groups, only: [ :index ]
     resources :retrofit_providers, only: [ :index ]
     resources :housing_providers, only: [ :index ]
+    resources :buildings, only: [ :index ]
   end
 
 end
