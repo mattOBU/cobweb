@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20140303002130) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "name"
-    t.string   "street"
+    t.string   "street_name"
     t.string   "city"
     t.string   "area_accuracy"
     t.string   "occupants_accuract"
