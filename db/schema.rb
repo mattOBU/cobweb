@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140303002130) do
+ActiveRecord::Schema.define(version: 20140303100827) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "building_groups", force: true do |t|
+    t.string   "name"
+    t.string   "postcode"
+    t.string   "city"
+    t.string   "year"
+    t.string   "category"
+    t.string   "granularity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
 
   create_table "buildings", force: true do |t|
     t.string   "street_number"

@@ -1,0 +1,16 @@
+.container
+  %h1 Enter data for a group of buildings
+
+  = form_for @building_group, html: { class: "form-inline" } do |f|
+    .form-group
+      = f.label :name, class: "sr-only"
+      = f.text_field :name, class: "form-control", placeholder: "Suitable name for group"
+    .form-group
+      = f.label :postcode, class: "sr-only"
+      = f.text_field :postcode, class: "form-control", placeholder: "postcode"
+    .form-group
+      = f.label :city, class: "sr-only"
+      = f.text_field :city, class: "form-control", placeholder: "city"
+    .form-group
+      = f.label :year, class: "sr-only"
+      = f.select :year, options_for_select(1990..2014), { include_blank: true }, class: "form-control"

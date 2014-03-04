@@ -11,6 +11,7 @@ Cobweb::Application.routes.draw do
   end
 
   resources :buildings
+  resources :building_groups
 
   # Manage Cobweb routes
   namespace :manage do
