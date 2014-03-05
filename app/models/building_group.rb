@@ -10,4 +10,8 @@ class BuildingGroup < ActiveRecord::Base
     end
   end
 
+  def location_scope
+    postcode.present? ? "Postcode #{postcode}" : "City wide"
+  end
+
 end
