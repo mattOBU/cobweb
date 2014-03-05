@@ -37,7 +37,7 @@ class BuildingGroupsController < ApplicationController
   def building_group_params
     params.
       require(:building_group).
-      permit(:name, :postcode, :city, :year, :category, :granularity)
+      permit(:name, :postcode, :city, :year, :category)
   end
 
 end
