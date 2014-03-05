@@ -19,7 +19,7 @@ class CommunityGroup < ActiveRecord::Base
   end
 
   def admins
-    User.with_role(:group_admin, self)
+    User.with_role(:community_group_administrator, self)
   end
 
   def users

@@ -20,7 +20,7 @@ class CommunityGroupsController < ApplicationController
     @community_group = CommunityGroup.new(community_group_params)
     if @community_group.save
       @community_group.members << current_user
-      current_user.add_role :group_admin, @community_group
+      current_user.add_role :community_group_administrator, @community_group
       redirect_to @community_group, notice: "Your new community group was successfully created"
     else
       redirect_to :index

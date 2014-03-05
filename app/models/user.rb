@@ -12,11 +12,31 @@ class User < ActiveRecord::Base
   has_many :building_groups
 
   def community_groups
-    CommunityGroup.with_roles([:member, :group_admin], self)
+    CommunityGroup.with_roles([:member, :community_group_administrator], self)
   end
 
   def name_or_email
     name || email
+  end
+
+  def local_authority?
+    has_role? :local_authority
+  end
+
+  def community_group_administrator?
+    has_role? :community_group_administrator, :any
+  end
+
+  def homeowner?
+    has_role? :homeowner, :any
+  end
+
+  def business?
+    has_role? :business, :any
+  end
+
+  def retrofit_provider?
+    has_role? :retrofit_provider
   end
 
   def member_of?(community_group)
