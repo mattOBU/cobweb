@@ -12,6 +12,7 @@ Cobweb::Application.routes.draw do
 
   resources :buildings
   resources :building_groups
+  resources :explorations, only: [:index]
 
   # Manage Cobweb routes
   namespace :manage do

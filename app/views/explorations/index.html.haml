@@ -1,0 +1,44 @@
+.container
+  .row
+    %h1 Data Analysis
+  .row
+    .filter.col-md-6
+      %form.form-inline{:role => "form"}
+        .row
+          .form-group.col-md-3
+            %label{:for => "building"} Select individual buildings
+            %input{:type => "text", :name => "building"}
+          .form-group.col-md-2-offset-1
+            %label{:for => "community_groups"} Select user-defined groups of buildings
+            %input{:type => "text", :name => "community_groups"}
+        .row
+          .form-group.col-md-3
+            %label{:for => "aggregated_groups"} Select user-defined groups of buildings
+            %input{:type => "text", :name => "aggregated_groups"}
+          .form-group.col-md-2-offset-1
+            %label{:for => "electricity_consumption_export"} Select user-defined groups of buildings
+            %input{:type => "text", :name => "electricity_consumption_export"}
+        .row
+          .form-group.col-md-3
+            %label{:for => "metric"} Select user-defined groups of buildings
+            %input{:type => "text", :name => "metric"}
+          .form-group.col-md-2-offset-1
+            %label{:for => "metric"} Select user-defined groups of buildings
+            %input{:type => "text", :name => "metric"}
+        .row
+          .form-group.col-md-3
+            %label{:for => "fossil"} Select user-defined groups of buildings
+            %input{:type => "text", :name => "fossil"}
+
+    .col-md-6.chart
+
+  .row
+    %table.table.table-striped
+      %tr
+        %th Building name/ building category
+        %th kWh/m2
+        %th kg CO2e/m2
+        %th kWh/occupant 
+        %th kg CO2e/occupant
+
+= javascript_include_tag "explorations"
