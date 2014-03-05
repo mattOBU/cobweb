@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
     has_role? :local_authority
   end
 
+  def landlord?
+    has_role? :landlord
+  end
+
   def community_group_administrator?
     has_role? :community_group_administrator, :any
   end
