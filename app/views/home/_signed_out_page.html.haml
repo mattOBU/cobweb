@@ -27,9 +27,7 @@
       %li Local authority housing manager or team
       %li Local authority school manager or team
 
-    %button.btn.btn-primary.pull-right
-      Sign up
-
+    = link_to "Sign up", new_user_registration_path(role: "local_authority"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Landlord
@@ -42,9 +40,7 @@
       %li Private or domestic landlord or developer
       %li Private commercial landlord or developer
 
-    %button.btn.btn-primary.pull-right
-      Sign up
-
+    = link_to "Sign up", new_user_registration_path(role: "landlord"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Community Group
@@ -55,8 +51,7 @@
       %li Fuel poverty agency
       %li Neighbourhood or district low carbon / sustainability group
 
-    %button.btn.btn-primary.pull-right
-      Sign up
+    = link_to "Sign up", new_user_registration_path(role: "community_group_administrator"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Householder
@@ -69,8 +64,7 @@
       Sign up here whether you were invited by a community
       group or simply want to keep track of your energy use.
 
-    %button.btn.btn-primary.pull-right
-      Sign up
+    = link_to "Sign up", new_user_registration_path(role: "homeowner"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Business
@@ -79,8 +73,7 @@
       %li Business in a single location (tenant or owner)
       %li Landlord of a single building
 
-    %button.btn.btn-primary.pull-right
-      Sign up
+    = link_to "Sign up", new_user_registration_path(role: "business"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Retrofit Provider
@@ -91,6 +84,4 @@
       %li Retrofit Installer
       %li Heat network provider or developer
 
-    %button.btn.btn-primary.pull-right
-      Sign up
-
+    = link_to "Sign up", new_user_registration_path(role: "retrofit_provider"), class: "btn btn-primary pull-right"
