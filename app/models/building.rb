@@ -5,8 +5,6 @@ class Building < ActiveRecord::Base
 
   belongs_to :user
 
-  # TODO add association with retrofit provider
-
   def address
     "#{street_number} #{street_name}, #{postcode} #{city}"
   end
