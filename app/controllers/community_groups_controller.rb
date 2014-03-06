@@ -13,7 +13,10 @@ class CommunityGroupsController < ApplicationController
   def search
     @postcode= params[:postcode]
     @community_groups = CommunityGroup.near(params[:postcode], 20, units: :km)
-    render :index
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @community_groups.map {|b| b.search_json }  }
+    end
   end
 
   def create

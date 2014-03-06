@@ -30,4 +30,13 @@ class CommunityGroup < ActiveRecord::Base
     admins.first.name_or_email unless admins.empty?
   end
 
+  def identifier
+    "#{self.name}, #{self.location}"
+  end
+
+  def search_json
+    {id: self.id,
+     identifier: self.identifier}
+  end
+
 end

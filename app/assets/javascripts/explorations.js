@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
   $(".buildings").ajaxChosen({
     type: 'GET',
     url: '/buildings/search',
-    datatype: 'json',
+    contentType: 'json',
     minTermLength: 5
   }, function(data) {
     var results = [];
@@ -12,7 +12,22 @@ jQuery(document).ready(function($) {
     $.each(data, function (i, val) {
         results.push({ value: val.id, text: val.address });
     });
-console.log(results);
+
+    return results;
+  });
+
+  $(".community-groups").ajaxChosen({
+    type: 'GET',
+    url: '/community_groups/search.json',
+    contentType: 'json',
+    minTermLength: 5,
+    jsonTermKey: "postcode"
+  }, function(data) {
+    var results = [];
+
+    $.each(data, function (i, val) {
+        results.push({ value: val.id, text: val.identifier });
+    });
 
     return results;
   });
