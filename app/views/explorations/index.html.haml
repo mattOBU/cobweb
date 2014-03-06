@@ -8,8 +8,8 @@
             %tr
               %td
                 .form-group
-                  %label{:for => "building"} Select individual buildings
-                  %input{:type => "text", :name => "building"}
+                  %label{:for => "buildings"} Select individual buildings
+                  %select{:"data-placeholder" => "please type the postcode", :class => "buildings", :style => "width: 200px", :multiple => true, :name => "buildings"}
               %td
                 .form-group
                   %label{:for => "community_groups"} Select user-defined groups of buildings

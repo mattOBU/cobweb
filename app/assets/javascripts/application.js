@@ -16,4 +16,5 @@
 //= require turbolinks
 //= require bootstrap
 //= require chosen.jquery
+//= require ajax-chosen
 //= require_tree .

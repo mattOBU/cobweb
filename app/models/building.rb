@@ -8,7 +8,7 @@ class Building < ActiveRecord::Base
   # TODO add association with retrofit provider
 
   def address
-    "#{street_number} #{street}, #{postcode} #{city}"
+    "#{street_number} #{street_name}, #{postcode} #{city}"
   end
 
   def co2_m2
@@ -33,5 +33,10 @@ class Building < ActiveRecord::Base
 
   def gbp_occupant
     rand(100)
+  end
+
+  def search_json
+    {id: self.id,
+     address: self.address} 
   end
 end

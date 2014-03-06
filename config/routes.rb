@@ -10,7 +10,9 @@ Cobweb::Application.routes.draw do
     resources :applications, controller: 'community_group_applications'
   end
 
-  resources :buildings
+  resources :buildings do
+    get 'search', on: :collection
+  end
   resources :building_groups
   resources :explorations, only: [:index]
 

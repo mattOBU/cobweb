@@ -37,6 +37,12 @@ class BuildingsController < ApplicationController
     @building = Building.find(params[:id])
   end
 
+  def search
+    @postcode= params[:term]
+    @buildings = Building.near(params[:term], 20, units: :km)
+    render :json => @buildings.map {|b| b.search_json }
+  end
+
   private
 
   def building_params
