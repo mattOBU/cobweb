@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require d3
+//= require dimple.v1.1.5
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
