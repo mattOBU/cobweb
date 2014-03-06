@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  geocoded_by :location
+
+  after_validation :geocode, if: -> (obj) {
+    obj.location.present? && obj.location_changed? }
+
   # TODO revisit the association between users and buildings
   # homeowner and businesses shouldn't be allowed to "have many"
   # buildings nor any building group
