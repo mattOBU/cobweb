@@ -3,7 +3,7 @@
     %h1 Data Analysis
     .filter.col-md-6.panel.panel-default
       .panel-body
-        %form.form-inline{:role => "form"}
+        = form_tag(role: "form") do
           %table
             %tr
               %td
@@ -50,6 +50,9 @@
                     %option{:value => "lpg"} LPG
                     %option{:value => "anthracite"} Anthracite
                     %option{:value => "pellets"} Wood pellets
+              %td
+                .form-group
+                  %input{:type => "submit", :value => "Explore", :class => "btn btn-default"}
 
     .col-md-6.panel.panel-default
       .panel-body
@@ -58,12 +61,10 @@
   .col-md-12
     .panel.panel-default
       .panel-body
-        %table.table.table-striped
+        %table.results.table.table-striped
           %tr
             %th Building name/ building category
             %th kWh/m2
             %th kg CO2e/m2
             %th kWh/occupant 
             %th kg CO2e/occupant
-
-= javascript_include_tag "explorations"

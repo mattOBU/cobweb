@@ -14,7 +14,7 @@ Cobweb::Application.routes.draw do
     get 'search', on: :collection
   end
   resources :building_groups
-  resources :explorations, only: [:index]
+  resources :explorations, only: [:index, :create]
 
   # Manage Cobweb routes
   namespace :manage do
