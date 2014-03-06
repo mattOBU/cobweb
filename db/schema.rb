@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140305122633) do
+ActiveRecord::Schema.define(version: 20140306183245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,10 @@ ActiveRecord::Schema.define(version: 20140305122633) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "age_groups"
+    t.float    "total_area"
+    t.integer  "total_occupancy"
+    t.string   "area_accuracy"
+    t.string   "occupancy_accuracy"
   end
 
   create_table "buildings", force: true do |t|
@@ -58,6 +62,28 @@ ActiveRecord::Schema.define(version: 20140305122633) do
     t.float    "latitude"
     t.float    "longitude"
     t.text     "description"
+  end
+
+  create_table "group_energy_profiles", force: true do |t|
+    t.string   "age_group"
+    t.integer  "building_group_id"
+    t.string   "imported_electricity_consumption"
+    t.string   "imported_electricity_consumption_unit"
+    t.string   "imported_electricity_consumption_accuracy"
+    t.string   "generated_electricity_consumption"
+    t.string   "generated_electricity_consumption_unit"
+    t.string   "generated_electricity_consumption_accuracy"
+    t.string   "exported_electricity"
+    t.string   "exported_electricity_unit"
+    t.string   "exported_electricity_accuracy"
+    t.string   "fossil_1_consumption"
+    t.string   "fossil_1_consumption_unit"
+    t.string   "fossil_1_consumption_accuracy"
+    t.string   "fossil_2_consumption"
+    t.string   "fossil_2_consumption_unit"
+    t.string   "fossil_2_consumption_accuracy"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "memberships", force: true do |t|
