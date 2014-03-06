@@ -6,4 +6,10 @@ class RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.for(:account_update) {|u| u.permit(:name, :email, :password, :password_confirmation, :current_password)}
   end
 
+  def create
+    super do |resource|
+      resource.add_role params[:role]
+    end
+  end
+
 end
