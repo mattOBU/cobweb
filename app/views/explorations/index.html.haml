@@ -1,44 +1,69 @@
 .container
-  .row
+  .col-md-12
     %h1 Data Analysis
-  .row
-    .filter.col-md-6
-      %form.form-inline{:role => "form"}
-        .row
-          .form-group.col-md-3
-            %label{:for => "building"} Select individual buildings
-            %input{:type => "text", :name => "building"}
-          .form-group.col-md-2-offset-1
-            %label{:for => "community_groups"} Select user-defined groups of buildings
-            %input{:type => "text", :name => "community_groups"}
-        .row
-          .form-group.col-md-3
-            %label{:for => "aggregated_groups"} Select user-defined groups of buildings
-            %input{:type => "text", :name => "aggregated_groups"}
-          .form-group.col-md-2-offset-1
-            %label{:for => "electricity_consumption_export"} Select user-defined groups of buildings
-            %input{:type => "text", :name => "electricity_consumption_export"}
-        .row
-          .form-group.col-md-3
-            %label{:for => "metric"} Select user-defined groups of buildings
-            %input{:type => "text", :name => "metric"}
-          .form-group.col-md-2-offset-1
-            %label{:for => "metric"} Select user-defined groups of buildings
-            %input{:type => "text", :name => "metric"}
-        .row
-          .form-group.col-md-3
-            %label{:for => "fossil"} Select user-defined groups of buildings
-            %input{:type => "text", :name => "fossil"}
+    .filter.col-md-6.panel.panel-default
+      .panel-body
+        %form.form-inline{:role => "form"}
+          %table
+            %tr
+              %td
+                .form-group
+                  %label{:for => "building"} Select individual buildings
+                  %input{:type => "text", :name => "building"}
+              %td
+                .form-group
+                  %label{:for => "community_groups"} Select user-defined groups of buildings
+                  %input{:type => "text", :name => "community_groups"}
+            %tr
+              %td
+                .form-group
+                  %label{:for => "aggregated_groups"} Select aggregated groups of buildings
+                  %input{:type => "text", :name => "aggregated_groups"}
+              %td
+                .form-group
+                  %label{:for => "year"} Select year
+                  %select{:"data-placeholder" => "year", :class => "chosen-select", :style => "width: 200px", :name => "year"}
+                    %option{:value => ""} All Times
+                    - 2013.downto(1919).each do |year|
+                      %option{:value => year}= year
+            %tr
+              %td
+                .form-group
+                  %label{:for => "electricity_consumption_export"} Select electricity consumption/export
+                  %select{:"data-placeholder" => "consumption/export", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "electricity_consumption_export"}
+                    %option{:value => "imported"} Imported electricity consumption
+                    %option{:value => "generated"} Generated electricity consumption
+                    %option{:value => "exported"} Exported electricity
+              %td
+                .form-group
+                  %label{:for => "metric"} Select metric
+                  %select{:"data-placeholder" => "metric", :class => "chosen-select", :style => "width: 200px", :name => "metric"}
+                    %option{:value => "kWhyr"} kWh/yr
+                    %option{:value => "kWhm2yr"} kWh/m2*yr
+            %tr
+              %td
+                .form-group
+                  %label{:for => "fossil"} Select fossil fuels
+                  %select{:"data-placeholder" => "fossil fuel(s)", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "fossil"}
+                    %option{:value => "gas"} Natural gas
+                    %option{:value => "oil"} Oil
+                    %option{:value => "lpg"} LPG
+                    %option{:value => "anthracite"} Anthracite
+                    %option{:value => "pellets"} Wood pellets
 
-    .col-md-6.chart
+    .col-md-6.panel.panel-default
+      .panel-body
+        .chart
 
-  .row
-    %table.table.table-striped
-      %tr
-        %th Building name/ building category
-        %th kWh/m2
-        %th kg CO2e/m2
-        %th kWh/occupant 
-        %th kg CO2e/occupant
+  .col-md-12
+    .panel.panel-default
+      .panel-body
+        %table.table.table-striped
+          %tr
+            %th Building name/ building category
+            %th kWh/m2
+            %th kg CO2e/m2
+            %th kWh/occupant 
+            %th kg CO2e/occupant
 
 = javascript_include_tag "explorations"

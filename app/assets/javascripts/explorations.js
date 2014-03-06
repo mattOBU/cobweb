@@ -50,3 +50,7 @@ chart.append("line")
      .attr("y1", h - .5)
      .attr("y2", h - .5)
      .style("stroke", "#000");
+
+jQuery(document).ready(function($) {
+  $(".chosen-select").chosen();
+});
