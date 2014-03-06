@@ -1,16 +1,67 @@
 .container
   %h1 Enter data for a group of buildings
 
-  = form_for @building_group, html: { class: "form-inline" } do |f|
-    .form-group
+  = form_for @building_group do |f|
+    .col-md-4
       = f.label :name, class: "sr-only"
       = f.text_field :name, class: "form-control", placeholder: "Suitable name for group"
-    .form-group
+    .col-md-2
       = f.label :postcode, class: "sr-only"
       = f.text_field :postcode, class: "form-control", placeholder: "postcode"
-    .form-group
+    .col-md-2
       = f.label :city, class: "sr-only"
       = f.text_field :city, class: "form-control", placeholder: "city"
-    .form-group
+    .col-md-2
       = f.label :year, class: "sr-only"
-      = f.select :year, options_for_select(1990..2014), { include_blank: true }, class: "form-control"
+      = f.text_field :year, class: "form-control", placeholder: "year"
+    .col-md-2
+      = f.check_box :age_groups
+      = f.label :age_groups, "Can the buildings be broken down by age groups"
+
+    .col-md-6
+      %ul.nav.nav-tabs
+        %li
+          %a{ href: "#all-sectors", :"data-toggle" => "tab" } Whole
+        %li
+          %a{ href: "#residential-sector", :"data-toggle" => "tab" } Residential
+        %li
+          %a{ href: "#non-residential-sector", :"data-toggle" => "tab" } Non Residential
+
+      .tab-content
+        .tab-pane#all-sectors
+        .tab-pane#residential-sector
+        .tab-pane#non-residential-sector
+
+    .col-md-3
+      .form-group
+        = f.label :total_area, class:"sr-only"
+        = f.text_field :total_area, class: "form-control"
+
+      .form-group
+        = f.label :total_occupancy, class: "sr-only"
+        = f.text_field :total_occupancy, class: "form-control"
+
+    .col-md-3
+      .form-group
+        = f.label :area_accuracy, class: "sr-only"
+        = f.select :area_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+
+      .form-group
+        = f.label :occupancy_accuracy, class: "sr-only"
+        = f.select :occupancy_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+
+
+    = f.fields_for :group_energy_profiles, @building_group.group_energy_profiles do |p|
+      .col-md-12
+        .col-md-2
+          = p.hidden_field :age_group
+          = p.object.age_group == "all" ? "" : p.object.age_group
+        - ["imported_electricity_consumption", "generated_electricity_consumption", "exported_electricity", "fossil_1_consumption", "fossil_2_consumption"].each do |energy_detail|
+          .col-md-2
+            .col-md-12
+              = p.label energy_detail, energy_detail.humanize
+              = p.text_field energy_detail, class: "form-control"
+              = p.select "#{energy_detail}_unit", options_for_select(["kWh", "MWh", "GWh"]), {}, { class: "form-control input-sm" }
+              = p.select "#{energy_detail}_accuracy", options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control input-sm"}
+
+
