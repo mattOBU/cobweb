@@ -3,6 +3,11 @@ class Explore::CommunityGroupsController < ApplicationController
     end
 
     def create
+      if params[:buildings].present?
+        @buildings = Building.find_with_ids(params[:buildings])
+      else
+        render json: []
+      end
       render json: {buildings: [{ name: "our house", :annual => [{year: 2013, kWhm2: 128.1, kgCO2em2: 71.6, kWhocc: 3258.8, kgCO2eocc: 1820.5, mains: 115658, producedUsed: 41961, producedExported: 9167}] }]}
     end
 end
