@@ -6,7 +6,7 @@
       .panel-body
         = form_tag({},{role: "form"}) do
           .form-group
-            %label{:for => "buildings"} Select individual buildings
+            %label.required{:for => "buildings"} Select individual buildings
             %select{:"data-placeholder" => "please type a postcode", :class => "form-control buildings", :style => "width: 300px", :multiple => true, :required => true, :name => "buildings"}
           .form-group
             %label{:for => "year"} Select year
@@ -21,7 +21,7 @@
               %option{:value => "generated"} Generated electricity consumption
               %option{:value => "exported"} Exported electricity
           .form-group
-            %label{:for => "metric"} Select metric
+            %label.required{:for => "metric"} Select metric
             %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metric"}
               kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
               %option{:value => "kWhm2"} kWh/m2

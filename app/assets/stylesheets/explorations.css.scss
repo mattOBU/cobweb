@@ -1,6 +1,9 @@
 .filter label {
   display: block;
 }
+
+.filter .required:after { content:" *"; }
+
 sub {
   font-size: 75%;
   line-height: 0;

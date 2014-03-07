@@ -4,59 +4,40 @@
     %span#query
     .filter.col-md-6.panel.panel-default
       .panel-body
-        = form_tag(role: "form") do
-          %table
-            %tr
-              %td
-                .form-group
-                  %label{:for => "buildings"} Select individual buildings
-                  %select{:"data-placeholder" => "please type a postcode", :class => "buildings", :style => "width: 200px", :multiple => true, :name => "buildings"}
-              %td
-                .form-group
-                  %label{:for => "community_groups"} Select user-defined groups of buildings
-                  %select{:"data-placeholder" => "please type a postcode", :class => "community-groups", :style => "width: 200px", :multiple => true, :name => "community_groups"}
-            %tr
-              %td
-                .form-group
-                  %label{:for => "building_groups"} Select aggregated groups of buildings
-                  %select{:"data-placeholder" => "please type a postcode", :name => "building_groups", :class => "building-groups", :style => "width: 200px", :multiple => true}
-              %td
-                .form-group
-                  %label{:for => "year"} Select year
-                  %select{:"data-placeholder" => "all times by default", :class => "chosen-select", :style => "width: 200px", :name => "year"}
-                    %option{:value => ""} All Times
-                    - 2013.downto(1919).each do |year|
-                      %option{:value => year}= year
-            %tr
-              %td
-                .form-group
-                  %label{:for => "electricity_consumption_export"} Select electricity consumption/export
-                  %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "electricity_consumption_export"}
-                    %option{:value => "imported"} Imported electricity consumption
-                    %option{:value => "generated"} Generated electricity consumption
-                    %option{:value => "exported"} Exported electricity
-              %td
-                .form-group
-                  %label{:for => "metric"} Select metric
-                  %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 200px", :name => "metric"}
-                    kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
-                    %option{:value => "kWhm2"} kWh/m2
-                    %option{:value => "kWCO2em2"} kgCO2e/m2
-                    %option{:value => "kWhoccupant"} kWh/occupant
-                    %option{:value => "kCO2eoccupant"} kgCO2e/occupant
-            %tr
-              %td
-                .form-group
-                  %label{:for => "fossil"} Select fossil fuels
-                  %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "fossil"}
-                    %option{:value => "gas"} Natural gas
-                    %option{:value => "oil"} Oil
-                    %option{:value => "lpg"} LPG
-                    %option{:value => "anthracite"} Anthracite
-                    %option{:value => "pellets"} Wood pellets
-              %td
-                .form-group
-                  %input{:type => "submit", :value => "Explore", :class => "btn btn-primary"}
+        = form_tag({},{role: "form"}) do
+          .form-group
+            %label.required{:for => "building_groups"} Select aggregated groups of buildings
+            %select{:"data-placeholder" => "please type a postcode", :name => "building_groups", :class => "building-groups", :style => "width: 200px", :multiple => true, :required => true}
+          .form-group
+            %label{:for => "year"} Select year
+            %select{:"data-placeholder" => "all times by default", :class => "chosen-select", :style => "width: 300px", :name => "year"}
+              %option{:value => ""} All Times
+              - 2013.downto(1919).each do |year|
+                %option{:value => year}= year
+          .form-group
+            %label{:for => "electricity_consumption_export"} Select electricity consumption/export
+            %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "electricity_consumption_export"}
+              %option{:value => "imported"} Imported electricity consumption
+              %option{:value => "generated"} Generated electricity consumption
+              %option{:value => "exported"} Exported electricity
+          .form-group
+            %label.required{:for => "metric"} Select metric
+            %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metric"}
+              kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
+              %option{:value => "kWhm2"} kWh/m2
+              %option{:value => "kWCO2em2"} kgCO2e/m2
+              %option{:value => "kWhoccupant"} kWh/occupant
+              %option{:value => "kCO2eoccupant"} kgCO2e/occupant
+          .form-group
+            %label{:for => "fossil"} Select fossil fuels
+            %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "fossil"}
+              %option{:value => "gas"} Natural gas
+              %option{:value => "oil"} Oil
+              %option{:value => "lpg"} LPG
+              %option{:value => "anthracite"} Anthracite
+              %option{:value => "pellets"} Wood pellets
+          .form-group
+            %input{:type => "submit", :value => "Explore", :class => "btn btn-primary"}
 
     .col-md-6.panel.panel-default
       .panel-body
