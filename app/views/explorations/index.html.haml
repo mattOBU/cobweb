@@ -1,6 +1,7 @@
 .container
   .col-md-12
     %h1 Data Analysis
+    %span#query
     .filter.col-md-6.panel.panel-default
       .panel-body
         = form_tag(role: "form") do
@@ -22,7 +23,7 @@
               %td
                 .form-group
                   %label{:for => "year"} Select year
-                  %select{:"data-placeholder" => "year", :class => "chosen-select", :style => "width: 200px", :name => "year"}
+                  %select{:"data-placeholder" => "all times by default", :class => "chosen-select", :style => "width: 200px", :name => "year"}
                     %option{:value => ""} All Times
                     - 2013.downto(1919).each do |year|
                       %option{:value => year}= year
@@ -30,21 +31,21 @@
               %td
                 .form-group
                   %label{:for => "electricity_consumption_export"} Select electricity consumption/export
-                  %select{:"data-placeholder" => "consumption/export", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "electricity_consumption_export"}
+                  %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "electricity_consumption_export"}
                     %option{:value => "imported"} Imported electricity consumption
                     %option{:value => "generated"} Generated electricity consumption
                     %option{:value => "exported"} Exported electricity
               %td
                 .form-group
                   %label{:for => "metric"} Select metric
-                  %select{:"data-placeholder" => "metric", :class => "chosen-select", :style => "width: 200px", :name => "metric"}
+                  %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 200px", :name => "metric"}
                     %option{:value => "kWhyr"} kWh/yr
                     %option{:value => "kWhm2yr"} kWh/m2*yr
             %tr
               %td
                 .form-group
                   %label{:for => "fossil"} Select fossil fuels
-                  %select{:"data-placeholder" => "fossil fuel(s)", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "fossil"}
+                  %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 200px", :multiple => true, :name => "fossil"}
                     %option{:value => "gas"} Natural gas
                     %option{:value => "oil"} Oil
                     %option{:value => "lpg"} LPG
