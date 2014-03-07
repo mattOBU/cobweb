@@ -17,8 +17,8 @@
             %tr
               %td
                 .form-group
-                  %label{:for => "aggregated_groups"} Select aggregated groups of buildings
-                  %input{:type => "text", :name => "aggregated_groups"}
+                  %label{:for => "building_groups"} Select aggregated groups of buildings
+                  %select{:"data-placeholder" => "please type a postcode", :name => "building_groups", :class => "building-groups", :style => "width: 200px", :multiple => true}
               %td
                 .form-group
                   %label{:for => "year"} Select year

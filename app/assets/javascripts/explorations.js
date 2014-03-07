@@ -88,6 +88,20 @@ var search = function() {
     }
 
     var buildingGroups = function() {
+        $(".building-groups").ajaxChosen({
+            type: 'GET',
+            url: '/building_groups/search',
+            contentType: 'json',
+            minTermLength: 5
+        }, function(data) {
+            var results = [];
+
+            $.each(data, function (i, val) {
+                results.push({ value: val.id, text: val.address });
+            });
+
+            return results;
+        });
     }
 
     return {

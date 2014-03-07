@@ -35,6 +35,11 @@ class BuildingGroupsController < ApplicationController
     end
   end
 
+  # TODO search on location
+  def search
+      render json: []
+  end
+
   private
 
   def building_group_params
