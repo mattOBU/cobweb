@@ -7,15 +7,16 @@ var table = new function() {
   var construct = function(data) {
     clear();
     var buildings = data.buildings;
-    for (var i = 0; i < buildings.length; i++) {
-      var building = buildings[i];
-      $(".results").append("<tr><td>" + building.name +
-                           "</td><td>" + building.kWhm2 +
-                           "</td><td>" + building.kgCO2em2 +
-                           "</td><td>" + building.kWhocc +
-                           "</td><td>" + building.kgCO2eocc +
-                           "</td></tr>");
-    }
+    _.each(buildings, function(building) {
+      _.each(building.annual, function(yearly) {
+        $(".results").append("<tr><td>" + building.name + " " + yearly.year +
+                            "</td><td>" + yearly.kWhm2 +
+                            "</td><td>" + yearly.kgCO2em2 +
+                            "</td><td>" + yearly.kWhocc +
+                            "</td><td>" + yearly.kgCO2eocc +
+                            "</td></tr>");
+      });
+    });
   };
 
   return {

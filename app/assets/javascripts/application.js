@@ -18,4 +18,5 @@
 //= require bootstrap
 //= require chosen.jquery
 //= require ajax-chosen
+//= require underscore
 //= require_tree .
