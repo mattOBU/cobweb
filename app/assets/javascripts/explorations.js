@@ -51,39 +51,58 @@ var graphs = new function() {
   }
 }();
 
+var search = function() {
+    var buildings = function () {
+        $(".buildings").ajaxChosen({
+            type: 'GET',
+            url: '/buildings/search',
+            contentType: 'json',
+            minTermLength: 5
+        }, function(data) {
+            var results = [];
+
+            $.each(data, function (i, val) {
+                results.push({ value: val.id, text: val.address });
+            });
+
+            return results;
+        });
+    }
+
+    var communityGroups = function() {
+        $(".community-groups").ajaxChosen({
+            type: 'GET',
+            url: '/community_groups/search.json',
+            contentType: 'json',
+            minTermLength: 5,
+            jsonTermKey: "postcode"
+        }, function(data) {
+            var results = [];
+
+            $.each(data, function (i, val) {
+                results.push({ value: val.id, text: val.identifier });
+            });
+
+            return results;
+        });
+    }
+
+    var buildingGroups = function() {
+    }
+
+    return {
+        buildings: buildings,
+        communityGroups: communityGroups,
+        buildingGroups: buildingGroups
+    }
+}()
+
 jQuery(document).ready(function($) {
   $(".chosen-select").chosen();
 
-  $(".buildings").ajaxChosen({
-    type: 'GET',
-    url: '/buildings/search',
-    contentType: 'json',
-    minTermLength: 5
-  }, function(data) {
-    var results = [];
-
-    $.each(data, function (i, val) {
-        results.push({ value: val.id, text: val.address });
-    });
-
-    return results;
-  });
-
-  $(".community-groups").ajaxChosen({
-    type: 'GET',
-    url: '/community_groups/search.json',
-    contentType: 'json',
-    minTermLength: 5,
-    jsonTermKey: "postcode"
-  }, function(data) {
-    var results = [];
-
-    $.each(data, function (i, val) {
-        results.push({ value: val.id, text: val.identifier });
-    });
-
-    return results;
-  });
+  search.buildings();
+  search.communityGroups();
+  search.buildingGroups();
 
   var dataDisplayOnClick = function(event) {
     event.preventDefault();
@@ -94,6 +113,7 @@ jQuery(document).ready(function($) {
       url: url,
       data: formData,
       success: function(data) {
+        $("#query").text(data.query);
         table.construct(data);
         graphs.construct(data);
       }
