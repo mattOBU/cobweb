@@ -1,4 +1,4 @@
-class ExplorationsController < ApplicationController
+class Explore::CommunityGroupsController < ApplicationController
     def index
     end
 

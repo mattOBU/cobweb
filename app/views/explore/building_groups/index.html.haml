@@ -39,8 +39,11 @@
                 .form-group
                   %label{:for => "metric"} Select metric
                   %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 200px", :name => "metric"}
-                    %option{:value => "kWhyr"} kWh/yr
-                    %option{:value => "kWhm2yr"} kWh/m2*yr
+                    kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
+                    %option{:value => "kWhm2"} kWh/m2
+                    %option{:value => "kWCO2em2"} kgCO2e/m2
+                    %option{:value => "kWhoccupant"} kWh/occupant
+                    %option{:value => "kCO2eoccupant"} kgCO2e/occupant
             %tr
               %td
                 .form-group
