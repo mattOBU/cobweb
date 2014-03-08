@@ -12,7 +12,7 @@ class BuildingGroupsController < ApplicationController
     @building_group = BuildingGroup.new(building_group_params)
     authorize! :write, @building_group
     if @building_group.save
-      redirect_to root_path, info: "The building group has been created"
+      redirect_to root_path, notice: "The building group has been created"
     else
       flash[:error] = "There was a problem creating the building group"
       render action: :edit
@@ -28,7 +28,7 @@ class BuildingGroupsController < ApplicationController
     @building_group = BuildingGroup.find(params[:id])
     authorize! :write, @building_group
     if @building_group.update_attributes(building_group_params)
-      redirect_to root_path, info: "The building group has been saved"
+      redirect_to root_path, notice: "The building group has been saved"
     else
       flash[:error] = "There was an error saving the building group"
       render action: :edit
