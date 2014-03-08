@@ -14,32 +14,91 @@
     .col-md-2
       = f.label :year, class: "sr-only"
       = f.text_field :year, class: "form-control", placeholder: "year"
-    .col-md-2
-      = f.check_box :age_groups
-      = f.label :age_groups, "Can the buildings be broken down by age groups"
-
+    .col-md-2.checkbox
+      = f.label :age_groups do
+        = f.check_box :age_groups
+        Can the buildings be broken down by age groups
     .col-md-6
-      %ul.nav.nav-tabs
-        %li
-          %a{ href: "#all-sectors", :"data-toggle" => "tab" } Whole
-        %li
-          %a{ href: "#residential-sector", :"data-toggle" => "tab" } Residential
-        %li
-          %a{ href: "#non-residential-sector", :"data-toggle" => "tab" } Non Residential
+      #categories.btn-group{"data-toggle" => "buttons" }
+        %label.btn.btn-primary
+          = f.radio_button "category", "all", { "data-target" => "#all-sectors", "data-toggle" => "tab" }
+          Whole
+        %label.btn.btn-primary
+          = f.radio_button "category", "residential", { "data-target" => "#residential-sector", "data-toggle" => "tab" }
+          Residential
+        %label.btn.btn-primary
+          = f.radio_button "category", "non-residential", { "data-target" => "#non-residential-sector", "data-toggle" => "tab" }
+          Non Residential
 
       .tab-content
         .tab-pane#all-sectors
+          %p
+            This group includes buildings from both residential and non residential categories.
         .tab-pane#residential-sector
+          %p
+            Please select a building category if applicable:
+          %ul
+            %li
+              = f.radio_button "category", "single-family"
+              Single Family
+            %li
+              = f.radio_button "category", "multi-family"
+              Multi Family
         .tab-pane#non-residential-sector
+          %p
+            Please select a building category if applicable:
+          %ul
+            %li
+              = f.radio_button "category", "office"
+              Office
+            %li
+              = f.radio_button "category", "hotel"
+              Hotel
+            %li
+              = f.radio_button "category", "storage"
+              Warehouse/storage
+            %li
+              = f.radio_button "category", "mercantile"
+              Mercantile/service
+            %li
+              = f.radio_button "category", "food-service"
+              Food service
+            %li
+              = f.radio_button "category", "entertainment"
+              Entertainment
+            %li
+              = f.radio_button "category", "education"
+              Education
+            %li
+              = f.radio_button "category", "healthcare"
+              Healthcare
+            %li
+              = f.radio_button "category", "public-order"
+              Public order
+            %li
+              = f.radio_button "category", "public-assembly"
+              Public assembly
+            %li
+              = f.radio_button "category", "institutional-lodging"
+              Institutional lodging
+            %li
+              = f.radio_button "category", "other-institutional"
+              Other institutional
+            %li
+              = f.radio_button "category", "mixed-use"
+              Mixed-use buildings
+            %li
+              = f.radio_button "category", "other-commercial"
+              Other commercial
 
     .col-md-3
       .form-group
         = f.label :total_area, class:"sr-only"
-        = f.text_field :total_area, class: "form-control"
+        = f.text_field :total_area, class: "form-control", placeholder: "total area"
 
       .form-group
         = f.label :total_occupancy, class: "sr-only"
-        = f.text_field :total_occupancy, class: "form-control"
+        = f.text_field :total_occupancy, class: "form-control", placeholder: "total occupancy"
 
     .col-md-3
       .form-group
@@ -52,7 +111,7 @@
 
 
     = f.fields_for :group_energy_profiles, @building_group.group_energy_profiles do |p|
-      .col-md-12
+      .col-md-12.age-group{ id: (p.object.age_group == "all" ? "all-age-groups" : "") }
         .col-md-2
           = p.hidden_field :age_group
           = p.object.age_group == "all" ? "" : p.object.age_group
@@ -64,4 +123,6 @@
               = p.select "#{energy_detail}_unit", options_for_select(["kWh", "MWh", "GWh"]), {}, { class: "form-control input-sm" }
               = p.select "#{energy_detail}_accuracy", options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control input-sm"}
 
-
+    .col-md-2
+      = f.submit "Save", class: "btn btn-primary"
+= javascript_include_tag 'building_groups'
