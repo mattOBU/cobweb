@@ -3,6 +3,7 @@ class BuildingGroup < ActiveRecord::Base
 
   has_many :group_energy_profiles
   accepts_nested_attributes_for :group_energy_profiles
+  belongs_to :user
 
   def sector
     # TODO fix the category based lists below

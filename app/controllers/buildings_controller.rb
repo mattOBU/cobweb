@@ -8,6 +8,7 @@ class BuildingsController < ApplicationController
   def create
     @building = Building.new(building_params)
     authorize! :write, @building
+    @building.user = current_user
     if @building.save
       redirect_to root_path, info: "The building has been saved"
     else

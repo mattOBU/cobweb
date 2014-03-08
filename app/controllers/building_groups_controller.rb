@@ -11,6 +11,7 @@ class BuildingGroupsController < ApplicationController
   def create
     @building_group = BuildingGroup.new(building_group_params)
     authorize! :write, @building_group
+    @building_group.user = current_user
     if @building_group.save
       redirect_to root_path, notice: "The building group has been created"
     else
