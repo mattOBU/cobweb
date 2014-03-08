@@ -9,11 +9,15 @@
       %li.divider
       %li
         = link_to "Logout", destroy_user_session_path, method: 'delete'
-  %li.dropdown
-    %a.dropdown-toggle{ href: "#", :"data-toggle" => "dropdown" }
+  -#
+    %li.dropdown
+      %a.dropdown-toggle{ href: "#", :"data-toggle" => "dropdown" }
+        = current_role.humanize
+        %i.caret
+      %ul.dropdown-menu
+        - current_user.roles.each do |role|
+          %li
+            = link_to role.name.humanize, "/roles/switch/#{role.id}"
+  %li
+    %p.navbar-text
       = current_role.humanize
-      %i.caret
-    %ul.dropdown-menu
-      - current_user.roles.each do |role|
-        %li
-          = link_to role.name.humanize, "/roles/switch/#{role.id}"
