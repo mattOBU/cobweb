@@ -2,7 +2,7 @@ class BuildingGroupsController < ApplicationController
 
   def new
     @building_group = BuildingGroup.new
-    BuildingGroup::AGE_GROUPS.each do |age_group|
+    (BuildingGroup::AGE_GROUPS << "all").each do |age_group|
       @building_group.group_energy_profiles.build(age_group: age_group)
     end
     render action: :edit
