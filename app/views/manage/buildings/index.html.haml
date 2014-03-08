@@ -28,10 +28,9 @@
           %td= building_group.name
           %td
             = building_group.sector
-            (#{building_group.category})
+            = building_group.category == "all" ? "" : "(#{building_group.category})"
           %td
-            = building_group.location
-            (#{building_group.location_scope})
+            = building_group.location_scope
 .col-md-4
 
   %img.img-thumbnail{ src: "http://placehold.it/512x512" }
