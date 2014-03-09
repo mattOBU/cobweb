@@ -9,7 +9,6 @@ class BuildingGroup < ActiveRecord::Base
   belongs_to :user
 
   def sector
-    # TODO fix the category based lists below
     case category
     when "all"
       "whole"
