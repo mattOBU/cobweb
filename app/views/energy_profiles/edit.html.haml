@@ -1,0 +1,155 @@
+.container
+  %h2= @building.address
+
+  = form_for @building_energy_profile, url: building_energy_profile_path(building: @building) do |f|
+    .row
+      .col-md-6
+        #granularities.btn-group-vertical{"data-toggle" => "buttons"}
+          %label.btn.btn-primary
+            = f.radio_button "granularity", "yearly", { "data-target" => "#yearly-data", "data-toggle" => "tab" }
+            Yearly
+          %label.btn.btn-primary
+            = f.radio_button "granularity", "quarterly", { "data-target" => "#quarterly-data", "data-toggle" => "tab" }
+            Quarterly
+          %label.btn.btn-primary
+            = f.radio_button "granularity", "monthly", { "data-target" => "#monthly-data", "data-toggle" => "tab" }
+            Monthly
+      .col-md-6
+        %em pseudo graphs go here
+    .row
+      .col-md-2
+        .form-group
+          = f.label :consumption_type, "Select consumption"
+          = f.select :consumption_type, options_for_select(["imported_electricity_consumption", "generated_electricity_consumption", "exported_electricity"]), {}, { class: "form-control" }
+      .col-md-2
+        .form-group
+          = f.label :consumption_accuracy, "Select accuracy"
+          = f.select :consumption_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+      .col-md-2
+        .form-group
+          = f.label :fossil_fuel_type, "Select consumption"
+          = f.select :fossil_fuel_type, options_for_select(["natural gas", "oil", "lpg", "anthracite", "wood pellets"]), {}, { class: "form-control" }
+      .col-md-2
+        .form-group
+          = f.label :consumption_accuracy, "Select accuracy"
+          = f.select :consumption_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+      .col-md-2
+        .form-group
+          = f.label :year, "Select Year"
+          = f.text_field :year, class: "form-control", placeholder: "Year"
+    .row
+      .col-md-8
+        .tab-content
+          .tab-pane#yearly-data
+            .col-md-6
+              .form-group
+                = f.label :yearly_consumption
+                = f.text_field :yearly_consumption
+            .col-md-6
+              .form-group
+                = f.label :yearly_fossil_fuel
+                = f.text_field :yearly_fossil_fuel
+          .tab-pane#quarterly-data
+            .col-md-6
+              .form-group
+                = f.label :q1_consumption
+                = f.text_field :q1_consumption
+              .form-group
+                = f.label :q2_consumption
+                = f.text_field :q2_consumption
+              .form-group
+                = f.label :q3_consumption
+                = f.text_field :q3_consumption
+              .form-group
+                = f.label :q4_consumption
+                = f.text_field :q4_consumption
+            .col-md-6
+              .form-group
+                = f.label :q1_fossil_fuel
+                = f.text_field :q1_fossil_fuel
+              .form-group
+                = f.label :q2_fossil_fuel
+                = f.text_field :q2_fossil_fuel
+              .form-group
+                = f.label :q3_fossil_fuel
+                = f.text_field :q3_fossil_fuel
+              .form-group
+                = f.label :q4_fossil_fuel
+                = f.text_field :q4_fossil_fuel
+          .tab-pane#monthly-data
+            .col-md-6
+              .form-group
+                = f.label :m01_consumption
+                = f.text_field :m01_consumption
+              .form-group
+                = f.label :m02_consumption
+                = f.text_field :m02_consumption
+              .form-group
+                = f.label :m03_consumption
+                = f.text_field :m03_consumption
+              .form-group
+                = f.label :m04_consumption
+                = f.text_field :m04_consumption
+              .form-group
+                = f.label :m05_consumption
+                = f.text_field :m05_consumption
+              .form-group
+                = f.label :m06_consumption
+                = f.text_field :m06_consumption
+              .form-group
+                = f.label :m07_consumption
+                = f.text_field :m07_consumption
+              .form-group
+                = f.label :m08_consumption
+                = f.text_field :m08_consumption
+              .form-group
+                = f.label :m09_consumption
+                = f.text_field :m09_consumption
+              .form-group
+                = f.label :m10_consumption
+                = f.text_field :m10_consumption
+              .form-group
+                = f.label :m11_consumption
+                = f.text_field :m11_consumption
+              .form-group
+                = f.label :m12_consumption
+                = f.text_field :m12_consumption
+            .col-md-6
+              .form-group
+                = f.label :m01_fossil_fuel
+                = f.text_field :m01_fossil_fuel
+              .form-group
+                = f.label :m02_fossil_fuel
+                = f.text_field :m02_fossil_fuel
+              .form-group
+                = f.label :m03_fossil_fuel
+                = f.text_field :m03_fossil_fuel
+              .form-group
+                = f.label :m04_fossil_fuel
+                = f.text_field :m04_fossil_fuel
+              .form-group
+                = f.label :m05_fossil_fuel
+                = f.text_field :m05_fossil_fuel
+              .form-group
+                = f.label :m06_fossil_fuel
+                = f.text_field :m06_fossil_fuel
+              .form-group
+                = f.label :m07_fossil_fuel
+                = f.text_field :m07_fossil_fuel
+              .form-group
+                = f.label :m08_fossil_fuel
+                = f.text_field :m08_fossil_fuel
+              .form-group
+                = f.label :m09_fossil_fuel
+                = f.text_field :m09_fossil_fuel
+              .form-group
+                = f.label :m10_fossil_fuel
+                = f.text_field :m10_fossil_fuel
+              .form-group
+                = f.label :m11_fossil_fuel
+                = f.text_field :m11_fossil_fuel
+              .form-group
+                = f.label :m12_fossil_fuel
+                = f.text_field :m12_fossil_fuel
+      .col-md-4
+        = f.submit "Save", class: "btn btn-primary"
