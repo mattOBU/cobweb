@@ -1,5 +1,10 @@
 class BuildingsController < ApplicationController
 
+  def index
+    @buildings = current_user.buildings.missing_energy_profile
+    render action: :edit
+  end
+
   def new
     @buildings = current_user.buildings.missing_energy_profile
     @building = Building.new
@@ -11,7 +16,11 @@ class BuildingsController < ApplicationController
     authorize! :write, @building
     @building.user = current_user
     if @building.save
-      redirect_to root_path, info: "The building has been saved"
+      if params[:commit]
+        redirect_to building_energy_profile_path(@building), notice: "The building has been saved. Please enter energy consumption data."
+      else
+        redirect_to action: 'new'
+      end
     else
       flash[:error] = "There was an error saving the new building"
       render action: :edit
