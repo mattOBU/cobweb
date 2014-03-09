@@ -36,4 +36,8 @@ class BuildingCategory
       self.new(parts[0], parts[1])
     end
   end
+
+  def self.with_sector(sector)
+    all.select { |c| c.sector == sector }
+  end
 end
