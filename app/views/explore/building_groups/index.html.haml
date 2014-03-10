@@ -7,7 +7,7 @@
         = form_tag({},{role: "form"}) do
           .form-group
             %label.required{:for => "building_groups"} Select aggregated groups of buildings
-            %select{:"data-placeholder" => "please type a postcode", :name => "building_groups", :class => "building-groups", :style => "width: 200px", :multiple => true, :required => true}
+            %select{:"data-placeholder" => "please type a postcode", :name => "building_groups", :class => "building-groups", :style => "width: 300px", :multiple => true, :required => true}
           .form-group
             %label{:for => "year"} Select year
             %select{:"data-placeholder" => "all times by default", :class => "chosen-select", :style => "width: 300px", :name => "year"}

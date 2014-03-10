@@ -4,7 +4,7 @@ class Explore::CommunityGroupsController < ApplicationController
 
     def create
       if params[:community_groups].present?
-        @buildings = CommunityGroups.find_with_ids(params[:community_groups])
+        @community_groups = CommunityGroups.find_with_ids(params[:community_groups])
         render json: []
       else
         render json: []
