@@ -4,9 +4,10 @@
 # for multiple buildings:
 # return with largest available granularity
 class Calculators::BuildingCalculator
-  def initialize(buildings)
+  def initialize(buildings, options)
     @buildings = buildings
     @buildings = [@buildings] if !@buildings.kind_of?(Array)
+    @options = options
   end
 
   def table_data
@@ -19,40 +20,7 @@ class Calculators::BuildingCalculator
   def energy_row(building)
     energy_profile = building.building_energy_profile
     table_data = {name: building.name}
-    consumption, fossil_fuel = 0, 0
-    case energy_profile.granularity
-    when "quarterly"
-        consumption = energy_profile.q1_consumption + energy_profile.q2_consumption + energy_profile.q3_consumption + energy_profile.q4_consumption
-        fossil_fuel = energy_profile.q1_fossil_fuel + energy_profile.q2_fossil_fuel + energy_profile.q3_fossil_fuel + energy_profile.q4_fossil_fuel
-    when "monthly"
-        consumption = energy_profile.m01_consumption +
-                        energy_profile.m02_consumption +
-                        energy_profile.m03_consumption +
-                        energy_profile.m04_consumption +
-                        energy_profile.m05_consumption +
-                        energy_profile.m06_consumption +
-                        energy_profile.m07_consumption +
-                        energy_profile.m08_consumption +
-                        energy_profile.m09_consumption +
-                        energy_profile.m10_consumption +
-                        energy_profile.m11_consumption +
-                        energy_profile.m12_consumption
-        fossil_fuel = energy_profile.m01_fossil_fuel +
-                        energy_profile.m02_fossil_fuel +
-                        energy_profile.m03_fossil_fuel +
-                        energy_profile.m04_fossil_fuel +
-                        energy_profile.m05_fossil_fuel +
-                        energy_profile.m06_fossil_fuel +
-                        energy_profile.m07_fossil_fuel +
-                        energy_profile.m08_fossil_fuel +
-                        energy_profile.m09_fossil_fuel +
-                        energy_profile.m10_fossil_fuel +
-                        energy_profile.m11_fossil_fuel +
-                        energy_profile.m12_fossil_fuel
-    else
-        consumption = energy_profile.yearly_consumption
-        fossil_fuel = energy_profile.yearly_fossil_fuel
-    end
+    consumption, fossil_fuel = energy_profile.yearly_data
     energy_numbers = calculate(consumption, fossil_fuel, energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
     table_data = table_data.merge({year: energy_profile.year}).merge(energy_numbers)
     table_data
@@ -62,8 +30,24 @@ class Calculators::BuildingCalculator
   # granularity is yearly, and energy profile = monthly or quarterly -> aggregate
   # granularity is quarterly, and energy profile = monthly -> aggregate
   # granularity is monthly
+  # there's more than one building: compare at the largest granularity
   def graph_data
     granularity = largest_granularity(@buildings.map {|b| b.building_energy_profile.present? ? b.building_energy_profile.granularity : "monthly" })
+    graph = @buildings.reduce([]) do |graph_rows, b|
+      graph_rows.concat(graph_rows(b, granularity))
+    end 
+    {metrics: @options[:metrics], fossil_fuels: @options[:fossil_fuels], time_unit: time_unit(granularity)}.merge({data: graph})
+  end
+
+  def time_unit(granularity)
+    case granularity
+    when "monthly"
+      "month"
+    when "quarterly"
+      "quarter"
+    when  "yearly"
+      "year"
+    end
   end
 
   def largest_granularity(gr)
@@ -77,6 +61,34 @@ class Calculators::BuildingCalculator
     end
   end
 
+  # depending on options: metrics, fossil fuels
+  # desired result:
+  # if kWh_m2 is unit
+  # [{month: xxx, building-name: z, kWh_m2: o}] 
+  # or
+  # [{quarter: yyy, building-name:...
+  def graph_rows(building, granularity)
+    energy_profile = building.building_energy_profile
+    return [] if energy_profile.nil?
+    case granularity
+    when "monthly"
+      consumption, fossil_fuel = energy_profile.monthly_data
+      calculated_data = consumption.reduce([]) do |memo, (key, value)|
+        calculated_values = calculate(value, fossil_fuel[key], energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
+        memo << calculated_values.merge({:"building-name" => building.name, :month => key})
+      end
+    when "quarterly"
+      consumption, fossil_fuel = energy_profile.quarterly_data
+      calculated_data = consumption.reduce([]) do |memo, (key, value)|
+        calculated_values = calculate(value, fossil_fuel[key], energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
+        memo << calculated_values.merge({:"building-name" => building.name, :quarter => key})
+      end
+    when "yearly"
+      consumption, fossil_fuel = energy_profile.yearly_data
+      calculated_data = calculate(consumption, fossil_fuel, energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
+      [calculated_data.merge({:"building-name" => building.name, :year => energy_profile.year})]
+    end
+  end
 
   def calculate(electricity_kwh, fossil_fuel_kwh, fossil_fuel_type, area, occupants)
     total_kWh = electricity_kwh + fossil_fuel_kwh

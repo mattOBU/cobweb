@@ -3,9 +3,9 @@ class Explore::BuildingsController < ApplicationController
     end
 
     def create
-      params[:buildings] ||= []
+      render json: {query: params.inspect, table: []} and return if params[:buildings].nil?
       @buildings = Building.find(*params[:buildings])
-      calc = Calculators::BuildingCalculator.new(@buildings)
-      render json: {query: params.inspect, table: calc.table_data}
+      calc = Calculators::BuildingCalculator.new(@buildings, {metrics: params[:metrics], fossil_fuels: params["fossil_fuels"]})
+      render json: {query: params.inspect, table: calc.table_data, graph: calc.graph_data}
     end
 end

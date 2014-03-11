@@ -6,7 +6,6 @@ var table = new function() {
 
   var construct = function(data) {
     clear();
-    console.log(data);
     _.each(data, function(building) {
         $(".results").append("<tr><td>" + building.name + " " + building.year +
                             "</td><td>" + building.kWh_m2 +
@@ -29,6 +28,7 @@ var graphs = new function() {
   }
   var construct = function(data) {
     clear();
+    /*
     var annual = data.buildings[0].annual[0];
     var energyData = [{year: 2013, energy: "mainsE", kWh: annual.mains}, 
                       {year: 2013, energy: "PVused", kWh: annual.producedUsed},
@@ -41,6 +41,17 @@ var graphs = new function() {
     myChart.addCategoryAxis("y", ["year"]);
     myChart.addSeries("energy", dimple.plot.bar);
     myChart.addLegend(100, 10, 380, 20, "right");
+    myChart.draw();
+    */
+
+console.log(data);
+    var svg = dimple.newSvg(".charts", 430, 400);
+    myChart = new dimple.chart(svg, data.data);
+    myChart.setBounds(30, 45, 400, 315)
+    myChart.addCategoryAxis("x", [data.time_unit, "building-name"]);
+    myChart.addMeasureAxis("y", data.metrics);
+    myChart.addSeries("building-name", dimple.plot.bar);
+    myChart.addLegend(100, 10, 300, 20, "right");
     myChart.draw();
   };
 
@@ -125,9 +136,9 @@ jQuery(document).ready(function($) {
       url: url,
       data: formData,
       success: function(data) {
-        $("#query").text(data.query);
+        //$("#query").text(data.query);
         table.construct(data.table);
-//        graphs.construct(data);
+        graphs.construct(data.graph);
       }
     });
     return false;
