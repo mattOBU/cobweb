@@ -1,4 +1,4 @@
-class Conversion
+class Calculators::Conversion
   KWH_IN_TJ = 277777.778
 
   def self.TJ_to_kWh(tj)
@@ -23,18 +23,20 @@ class Conversion
 # converting to kgCO2e / kWh
   def self.emission_factor(fuel)
     case fuel
-    when :electricity
+    when "electricity"
       0.569737
-    when :gas
+    when "gas"
       56.1051/KWH_IN_TJ
-    when :oil
+    when "oil"
       74.1106/KWH_IN_TJ
-    when :lpg
+    when "lpg"
       63.1051/KWH_IN_TJ
-    when :anthracite
+    when "anthracite"
       98.3115/KWH_IN_TJ
-    when :pellets
+    when "pellets"
       112.304/KWH_IN_TJ
+    else
+      0
     end 
   end
 end

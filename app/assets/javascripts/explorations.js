@@ -6,16 +6,14 @@ var table = new function() {
 
   var construct = function(data) {
     clear();
-    var buildings = data.buildings;
-    _.each(buildings, function(building) {
-      _.each(building.annual, function(yearly) {
-        $(".results").append("<tr><td>" + building.name + " " + yearly.year +
-                            "</td><td>" + yearly.kWhm2 +
-                            "</td><td>" + yearly.kgCO2em2 +
-                            "</td><td>" + yearly.kWhocc +
-                            "</td><td>" + yearly.kgCO2eocc +
+    console.log(data);
+    _.each(data, function(building) {
+        $(".results").append("<tr><td>" + building.name + " " + building.year +
+                            "</td><td>" + building.kWh_m2 +
+                            "</td><td>" + building.kgCO2e_m2 +
+                            "</td><td>" + building.kWh_occ +
+                            "</td><td>" + building.kgCO2e_occ +
                             "</td></tr>");
-      });
     });
   };
 
@@ -128,8 +126,8 @@ jQuery(document).ready(function($) {
       data: formData,
       success: function(data) {
         $("#query").text(data.query);
-        table.construct(data);
-        graphs.construct(data);
+        table.construct(data.table);
+//        graphs.construct(data);
       }
     });
     return false;
