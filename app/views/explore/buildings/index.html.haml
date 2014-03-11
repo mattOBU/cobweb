@@ -7,7 +7,7 @@
         = form_tag({},{role: "form"}) do
           .form-group
             %label.required{:for => "buildings"} Select individual buildings
-            %select{:"data-placeholder" => "please type a postcode", :class => "form-control buildings", :style => "width: 300px", :multiple => true, :required => true, :name => "buildings"}
+            %select{:"data-placeholder" => "please type a postcode", :class => "form-control buildings", :style => "width: 300px", :multiple => true, :required => true, :name => "buildings[]"}
           .form-group
             %label{:for => "year"} Select year
             %select{:"data-placeholder" => "all times by default", :class => "chosen-select", :style => "width: 300px", :name => "year"}
@@ -16,13 +16,13 @@
                 %option{:value => year}= year
           .form-group
             %label{:for => "electricity_consumption_export"} Select electricity consumption/export
-            %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "electricity_consumption_export"}
+            %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "electricity_consumption_export[]"}
               %option{:value => "imported"} Imported electricity consumption
               %option{:value => "generated"} Generated electricity consumption
               %option{:value => "exported"} Exported electricity
           .form-group
             %label.required{:for => "metric"} Select metric
-            %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metric"}
+            %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metrics[]"}
               kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
               %option{:value => "kWhm2"} kWh/m2
               %option{:value => "kWCO2em2"} kgCO2e/m2
@@ -30,7 +30,7 @@
               %option{:value => "kCO2eoccupant"} kgCO2e/occupant
           .form-group
             %label{:for => "fossil"} Select fossil fuels
-            %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "fossil"}
+            %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "fossils[]"}
               %option{:value => "gas"} Natural gas
               %option{:value => "oil"} Oil
               %option{:value => "lpg"} LPG
