@@ -7,7 +7,7 @@ class Building < ActiveRecord::Base
     obj.postcode.present? && obj.postcode_changed? }
 
   belongs_to :user
-  has_one :building_energy_profile
+  has_many :building_energy_profiles
 
   def address
     "#{street_number} #{street_name}, #{postcode} #{city}"
