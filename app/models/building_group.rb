@@ -23,6 +23,20 @@ class BuildingGroup < ActiveRecord::Base
     postcode.present? ? "Postcode #{postcode}" : "City wide"
   end
 
+  def identifier
+    identifier = name
+    if postcode.present?
+      identifier += ", " + postcode
+    end
+    if city.present?
+      identifier += ", " + city
+    end
+  end
+
+  def search_json
+    {id: self.id, identifier: identifier}
+  end
+
   private
 
   def location_for_geocoding

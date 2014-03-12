@@ -38,7 +38,8 @@ class BuildingGroupsController < ApplicationController
 
   # TODO search on location
   def search
-      render json: []
+    @building_groups = BuildingGroup.near(params[:term], 20, units: :km)
+    render :json => @building_groups.map {|bg| bg.search_json }
   end
 
   private

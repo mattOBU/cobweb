@@ -91,7 +91,7 @@ var search = function() {
             var results = [];
 
             $.each(data, function (i, val) {
-                results.push({ value: val.id, text: val.address });
+                results.push({ value: val.id, text: val.identifier });
             });
 
             return results;
