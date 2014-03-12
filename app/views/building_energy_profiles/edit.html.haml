@@ -1,0 +1,52 @@
+.container
+  %h2= @building.address
+
+  .row
+    .col-md-6
+      #granularities.btn-group-vertical{"data-toggle" => "buttons"}
+        %label.btn.btn-primary
+          = radio_button_tag "granularity", "yearly", false, { "data-target" => ".yearly-data", "data-toggle" => "tab" }
+          Yearly
+        %label.btn.btn-primary
+          = radio_button_tag "granularity", "quarterly", false, { "data-target" => ".quarterly-data", "data-toggle" => "tab" }
+          Quarterly
+        %label.btn.btn-primary
+          = radio_button_tag "granularity", "monthly", false, { "data-target" => ".monthly-data", "data-toggle" => "tab" }
+          Monthly
+    .col-md-6
+      %em pseudo graphs go here
+  .row
+    .col-md-2
+      .form-group
+        = label_tag :year, "Select Year"
+    .col-md-2
+      .form-group
+        = text_field_tag :year, nil, class: "form-control", placeholder: "Year"
+  .row.select-profile
+    .col-md-2
+      .form-group
+        = select_tag :electricity_profile_type, options_for_select(BuildingEnergyProfile::ELECTRICITY_TYPES), class: "form-control"
+        = label_tag :electricity_profile_type, "Select electricity consumption / export"
+    .col-md-2
+      .form-group
+        = select_tag :profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), class: "form-control"
+        = label_tag :profile_accuracy, "Select accuracy"
+    .col-md-2
+      .form-group
+        = select_tag :electricity_profile_type, options_for_select(BuildingEnergyProfile::FOSSIL_FUEL_TYPES),  class: "form-control"
+        = label_tag :electricity_profile_type, "Select fossil fuel"
+    .col-md-2
+      .form-group
+        = select_tag :profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), class: "form-control"
+        = label_tag :profile_accuracy, "Select accuracy"
+
+  .row
+    -# FIXME: we could possibly split this up in the controller...
+    -#   although it's presentation, not control logic
+    .col-md-4
+      - @building_profiles.select(&:electricity?).each do |profile|
+        = render partial: "energy_profile", locals: { energy_profile: profile }
+    .col-md-4
+      - @building_profiles.select(&:fossil_fuel?).each do |profile|
+        = render partial: "energy_profile", locals: { energy_profile: profile }
+

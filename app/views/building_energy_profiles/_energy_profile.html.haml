@@ -1,14 +1,7 @@
-= form_for @building_energy_profile, url: building_energy_profiles_path(building: @building), remote: true, html: { "data-dirty" => false } do |f|
+= form_for [@building, energy_profile], as: :energy_profile, remote: true, html: { "data-dirty" => false } do |f|
   = f.hidden_field :granularity
-  .row.select-profile
-    .col-md-6
-      .form-group
-        = f.select :profile_type, options_for_select(profile_types), {}, { class: "form-control" }
-        = f.label :profile_type, label
-    .col-md-6
-      .form-group
-        = f.select :profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
-        = f.label :profile_accuracy, "Select accuracy"
+  = f.hidden_field :profile_type
+  = f.hidden_field :profile_accuracy
   .row
     .tab-content
       .tab-pane.yearly-data

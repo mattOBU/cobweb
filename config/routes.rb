@@ -12,7 +12,7 @@ Cobweb::Application.routes.draw do
 
   resources :buildings do
     get 'search', on: :collection
-    resources :energy_profiles, except: [ :new ]
+    resources :building_energy_profiles, except: [ :new ]
   end
   resources :building_groups do
     get 'search', on: :collection
