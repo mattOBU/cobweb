@@ -33,9 +33,9 @@ console.log(data);
     var svg = dimple.newSvg(".charts", 430, 400);
     myChart = new dimple.chart(svg, data.data);
     myChart.setBounds(30, 45, 400, 315)
-    myChart.addCategoryAxis("x", [data.time_unit, "building-name", "metric"]);
+    myChart.addCategoryAxis("x", [data.time_unit, "building-name"]);
     myChart.addMeasureAxis("y", "energy");
-    myChart.addSeries(data.metrics, dimple.plot.bar);
+    myChart.addSeries("type", dimple.plot.bar);
     myChart.addLegend(100, 10, 300, 20, "right");
     myChart.draw();
   };

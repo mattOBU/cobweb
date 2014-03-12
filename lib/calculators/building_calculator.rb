@@ -75,13 +75,9 @@ class Calculators::BuildingCalculator
   # or
   # [{quarter: yyy, building-name:...
   def graph_rows(building, granularity)
-puts "HERE!!!"
     energy_profiles = building.energy_profiles
-puts energy_profiles.size
     energy_profiles.reduce([]) do |rows, energy_profile|
       rows.concat(energy_profile_rows(building, energy_profile, granularity))
-puts "HERE"
-      puts energy_profile_rows(building, energy_profile, granularity)
       rows
     end
   end
@@ -93,20 +89,20 @@ puts "HERE"
       calculated_data = consumption.reduce([]) do |memo, (key, value)|
         emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, value)
         calculated_values = calculate(value, emission, building.floor_area, building.number_of_occupants)
-        memo.concat(graph_row(calculated_values, building, {:month => key}))
+        memo.concat(graph_row(calculated_values, building, {:month => key, type: energy_profile.profile_type}))
       end
     when "quarterly"
       consumption = energy_profile.quarterly_data
       calculated_data = consumption.reduce([]) do |memo, (key, value)|
         emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, value)
         calculated_values = calculate(value, emission, building.floor_area, building.number_of_occupants)
-        memo.concat(graph_row(calculated_values, building, {:quarter => key}))
+        memo.concat(graph_row(calculated_values, building, {:quarter => key, type: energy_profile.profile_type}))
       end
     when "yearly"
       consumption = energy_profile.yearly_data
       emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, consumption)
       calculated_data = calculate(consumption, emission, building.floor_area, building.number_of_occupants)
-      graph_row(calculated_data, building, {:year => energy_profile.year})
+      graph_row(calculated_data, building, {:year => energy_profile.year, type: energy_profile.profile_type})
     end
   end
 

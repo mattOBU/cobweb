@@ -9,6 +9,9 @@
             %label.required{:for => "building_groups"} Select aggregated groups of buildings
             %select{:"data-placeholder" => "please type a postcode", :name => "building_groups", :class => "building-groups", :style => "width: 300px", :multiple => true, :required => true}
           .form-group
+            %label.required{:for => "buildings"} Select individual buildings
+            %select{:"data-placeholder" => "please type a postcode", :class => "form-control buildings", :style => "width: 300px", :multiple => true, :required => true, :name => "buildings[]"}
+          .form-group
             %label{:for => "year"} Select year
             %select{:"data-placeholder" => "all times by default", :class => "chosen-select", :style => "width: 300px", :name => "year"}
               %option{:value => ""} All Times
@@ -22,7 +25,7 @@
               %option{:value => "exported"} Exported electricity
           .form-group
             %label.required{:for => "metric"} Select metric
-            %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metric"}
+            %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metrics[]"}
               kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
               %option{:value => "kWhm2"} kWh/m2
               %option{:value => "kWCO2em2"} kgCO2e/m2
