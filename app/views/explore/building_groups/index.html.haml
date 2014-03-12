@@ -27,10 +27,10 @@
             %label.required{:for => "metric"} Select metric
             %select{:"data-placeholder" => "choose metric(s)", :class => "chosen-select", :multiple => true, :style => "width: 300px", :name => "metrics[]"}
               kWh/m2, kgCO2e/m2, kWh/occupant and kgCO2e/occupant
-              %option{:value => "kWhm2"} kWh/m2
-              %option{:value => "kWCO2em2"} kgCO2e/m2
-              %option{:value => "kWhoccupant"} kWh/occupant
-              %option{:value => "kCO2eoccupant"} kgCO2e/occupant
+              %option{:value => "kWh_m2"} kWh/m2
+              %option{:value => "kWCO2e_m2"} kgCO2e/m2
+              %option{:value => "kWh_occ"} kWh/occupant
+              %option{:value => "kCO2e_occ"} kgCO2e/occupant
           .form-group
             %label{:for => "fossil"} Select fossil fuels
             %select{:"data-placeholder" => "all by default", :class => "chosen-select", :style => "width: 300px", :multiple => true, :name => "fossil"}

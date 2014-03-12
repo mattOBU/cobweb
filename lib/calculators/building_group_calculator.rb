@@ -1,12 +1,10 @@
 class Calculators::BuildingGroupCalculator
-  # use group_energy_profiles over periods
 
-  # to generate:
-  # - for all times or per year
-  # - just show consumption export if required
-  def initialize(building_groups, options)
+  def initialize(building_groups, buildings, options)
     @building_groups = building_groups
     @building_groups = [@building_groups] if !@building_groups.is_a?(Array)
+    @buildings = buildings
+    @buildings = [@buildings] if !@buildings.is_a?(Array)
     @options = options
   end
 
@@ -21,28 +19,71 @@ class Calculators::BuildingGroupCalculator
   # we select the one that has no age group (so for now)
   def energy_row(bg)
     energy_profile = bg.group_energy_profiles.where(age_group: "all").first
-energy_profile.inspect
     total_energy = Calculators::Conversion.to_kWh(energy_profile.imported_electricity_consumption.to_i || 0, energy_profile.imported_electricity_consumption_unit) +
                    Calculators::Conversion.to_kWh(energy_profile.generated_electricity_consumption.to_i || 0, energy_profile.generated_electricity_consumption_unit) -
                    Calculators::Conversion.to_kWh(energy_profile.exported_electricity.to_i || 0, energy_profile.exported_electricity_unit) +
                    Calculators::Conversion.to_kWh(energy_profile.fossil_1_consumption.to_i || 0, energy_profile.fossil_1_consumption_unit) +
                    Calculators::Conversion.to_kWh(energy_profile.fossil_2_consumption.to_i || 0, energy_profile.fossil_2_consumption_unit)
-    # placeholder TODO natural gas
     total_emission = Calculators::Conversion.kgCO2_from_kWh("imported electricity consumption", 
                            Calculators::Conversion.to_kWh(energy_profile.imported_electricity_consumption.to_i || 0, energy_profile.imported_electricity_consumption_unit)) +
-                     Calculators::Conversion.kgCO2_from_kWh("natural gas",
+                     Calculators::Conversion.kgCO2_from_kWh(energy_profile.fossil_1_consumption_type,
                            Calculators::Conversion.to_kWh(energy_profile.fossil_1_consumption.to_i || 0, energy_profile.fossil_1_consumption_unit)) +
-                     Calculators::Conversion.kgCO2_from_kWh("natural gas",
+                     Calculators::Conversion.kgCO2_from_kWh(energy_profile.fossil_2_consumption_type,
                            Calculators::Conversion.to_kWh(energy_profile.fossil_2_consumption.to_i || 0, energy_profile.fossil_2_consumption_unit))
 
-puts "*"*59
-puts total_energy
-puts total_emission
-puts bg.total_area
-puts bg.total_occupancy
-puts "*"*59
     data = calculate(total_energy, total_emission, bg.total_area, bg.total_occupancy)
     data.merge({name: bg.name + " " + bg.category, year: bg.year})
+  end
+
+  # compare individidual buildings against the group calculated average
+  # several metrics allowed
+  # can filter on type of energy
+  def graph_data
+    graph = @building_groups.reduce([]) do |data, bg|
+      data.concat(graph_bg_row(bg))
+    end
+    building_rows = @buildings.reduce([]) do |memo, building|
+      building_results = building.energy_profiles.reduce({}) do |building_data, energy_profile|
+        consumption = energy_profile.yearly_data
+        emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, consumption)
+        building_data[:consumption] ||= 0
+        building_data[:consumption] += consumption
+        building_data[:emission] ||= 0
+        building_data[:emission] += emission
+        building_data
+      end
+      calculated_data = calculate(building_results[:consumption], building_results[:emission], building.floor_area, building.number_of_occupants) 
+      rows_for_metrics = graph_row(calculated_data, building, {:year => building.energy_profiles.last.year}) # vile hack for year TODO
+      memo.concat(rows_for_metrics)
+    end
+    {metrics: @options[:metrics], time_unit: "yearly", data: graph.concat(building_rows)}
+  end
+
+  def graph_bg_row(bg)
+    energy_profile = bg.group_energy_profiles.where(age_group: "all").first
+    total_energy = Calculators::Conversion.to_kWh(energy_profile.imported_electricity_consumption.to_i || 0, energy_profile.imported_electricity_consumption_unit) +
+                   Calculators::Conversion.to_kWh(energy_profile.generated_electricity_consumption.to_i || 0, energy_profile.generated_electricity_consumption_unit) -
+                   Calculators::Conversion.to_kWh(energy_profile.exported_electricity.to_i || 0, energy_profile.exported_electricity_unit) +
+                   Calculators::Conversion.to_kWh(energy_profile.fossil_1_consumption.to_i || 0, energy_profile.fossil_1_consumption_unit) +
+                   Calculators::Conversion.to_kWh(energy_profile.fossil_2_consumption.to_i || 0, energy_profile.fossil_2_consumption_unit)
+    total_emission = Calculators::Conversion.kgCO2_from_kWh("imported electricity consumption", 
+                           Calculators::Conversion.to_kWh(energy_profile.imported_electricity_consumption.to_i || 0, energy_profile.imported_electricity_consumption_unit)) +
+                     Calculators::Conversion.kgCO2_from_kWh(energy_profile.fossil_1_consumption_type,
+                           Calculators::Conversion.to_kWh(energy_profile.fossil_1_consumption.to_i || 0, energy_profile.fossil_1_consumption_unit)) +
+                     Calculators::Conversion.kgCO2_from_kWh(energy_profile.fossil_2_consumption_type,
+                           Calculators::Conversion.to_kWh(energy_profile.fossil_2_consumption.to_i || 0, energy_profile.fossil_2_consumption_unit))
+
+    group_data = calculate(total_energy, total_emission, bg.total_area, bg.total_occupancy)
+    graph_row(group_data, bg, {:year => bg.year})
+  end
+
+  def graph_row(calculated_values, building, time)
+    calculated_values.reduce([]) do |result, (key, value)|
+      if @options[:metrics].include?(key.to_s)
+        result << {:energy => value, :metric => key.to_s, :"building-name" => building.name}.merge(time)
+      end
+      result
+    end
   end
 
   def calculate(total_kWh, total_kgCO2e, area, occupants)

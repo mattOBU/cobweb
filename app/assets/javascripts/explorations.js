@@ -40,8 +40,23 @@ console.log(data);
     myChart.draw();
   };
 
+  var buildingGroup = function(data) {
+    clear();
+
+console.log(data);
+    var svg = dimple.newSvg(".charts", 430, 400);
+    myChart = new dimple.chart(svg, data.data);
+    myChart.setBounds(30, 45, 400, 315)
+    myChart.addCategoryAxis("x", ["building-name", "metric"]);
+    myChart.addMeasureAxis("y", "energy");
+    myChart.addSeries("metric", dimple.plot.bar);
+    myChart.addLegend(100, 10, 300, 20, "right");
+    myChart.draw();
+  };
+
   return {
-    construct: construct
+    construct: construct,
+    buildingGroup: buildingGroup
   }
 }();
 
@@ -123,7 +138,11 @@ jQuery(document).ready(function($) {
       success: function(data) {
         //$("#query").text(data.query);
         table.construct(data.table);
-        graphs.construct(data.graph);
+        if (data.graph_for == "building-group") {
+          graphs.buildingGroup(data.graph);
+        } else {
+          graphs.construct(data.graph);
+        }
       }
     });
     return false;
