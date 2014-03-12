@@ -28,29 +28,14 @@ var graphs = new function() {
   }
   var construct = function(data) {
     clear();
-    /*
-    var annual = data.buildings[0].annual[0];
-    var energyData = [{year: 2013, energy: "mainsE", kWh: annual.mains}, 
-                      {year: 2013, energy: "PVused", kWh: annual.producedUsed},
-                      {year: 2013, energy: "PVexported", kWh: -annual.producedExported}];
-    // simple horizontal barchart for annual consumption
-    var svg = dimple.newSvg(".charts", 590, 200);
-    var myChart = new dimple.chart(svg, energyData);
-    myChart.setBounds(30, 30, 480, 130)
-    myChart.addMeasureAxis("x", "kWh");
-    myChart.addCategoryAxis("y", ["year"]);
-    myChart.addSeries("energy", dimple.plot.bar);
-    myChart.addLegend(100, 10, 380, 20, "right");
-    myChart.draw();
-    */
 
 console.log(data);
     var svg = dimple.newSvg(".charts", 430, 400);
     myChart = new dimple.chart(svg, data.data);
     myChart.setBounds(30, 45, 400, 315)
-    myChart.addCategoryAxis("x", [data.time_unit, "building-name"]);
-    myChart.addMeasureAxis("y", data.metrics);
-    myChart.addSeries("building-name", dimple.plot.bar);
+    myChart.addCategoryAxis("x", [data.time_unit, "building-name", "metric"]);
+    myChart.addMeasureAxis("y", "energy");
+    myChart.addSeries(data.metrics, dimple.plot.bar);
     myChart.addLegend(100, 10, 300, 20, "right");
     myChart.draw();
   };

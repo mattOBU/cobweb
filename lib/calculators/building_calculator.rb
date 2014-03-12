@@ -75,18 +75,27 @@ class Calculators::BuildingCalculator
       consumption, fossil_fuel = energy_profile.monthly_data
       calculated_data = consumption.reduce([]) do |memo, (key, value)|
         calculated_values = calculate(value, fossil_fuel[key], energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
-        memo << calculated_values.merge({:"building-name" => building.name, :month => key})
+        memo.concat(graph_row(calculated_values, building, {:month => key}))
       end
     when "quarterly"
       consumption, fossil_fuel = energy_profile.quarterly_data
       calculated_data = consumption.reduce([]) do |memo, (key, value)|
         calculated_values = calculate(value, fossil_fuel[key], energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
-        memo << calculated_values.merge({:"building-name" => building.name, :quarter => key})
+        memo.concat(graph_row(calculated_values, building, {:quarter => key}))
       end
     when "yearly"
       consumption, fossil_fuel = energy_profile.yearly_data
       calculated_data = calculate(consumption, fossil_fuel, energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
-      [calculated_data.merge({:"building-name" => building.name, :year => energy_profile.year})]
+      graph_row(calculated_data, building, {:year => energy_profile.year})
+    end
+  end
+
+  def graph_row(calculated_values, building, time)
+    calculated_values.reduce([]) do |result, (key, value)|
+      if @options[:metrics].include?(key.to_s)
+        result << {:energy => value, :metric => key.to_s, :"building-name" => building.name}.merge(time)
+      end
+      result
     end
   end
 
