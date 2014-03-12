@@ -1,4 +1,4 @@
-= form_for [@building, energy_profile], as: :energy_profile, remote: true, html: { "data-dirty" => false } do |f|
+= form_for [@building, building_energy_profile], remote: true, html: { "data-dirty" => false } do |f|
   = f.hidden_field :granularity
   = f.hidden_field :profile_type
   = f.hidden_field :profile_accuracy
