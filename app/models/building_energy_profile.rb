@@ -1,7 +1,28 @@
 class BuildingEnergyProfile < ActiveRecord::Base
   belongs_to :building
 
- 
+  ELECTRICITY_TYPES= [
+     "imported electricity consumption",
+     "generated electricity consumption",
+     "exported electricity"
+  ]
+
+  FOSSIL_FUEL_TYPES= [
+      "natural gas",
+      "oil",
+      "LPG",
+      "anthracite",
+      "wood pellets"
+  ]
+
+  def electricity?
+    ELECTRICITY_TYPES.include? profile_type
+  end
+
+  def fossil_fuel?
+    FOSSIL_FUEL_TYPES.include? profile_type
+  end
+
   def monthly_to_yearly
     consumption = m01_consumption +
                     m02_consumption +
