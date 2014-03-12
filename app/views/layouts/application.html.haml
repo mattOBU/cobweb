@@ -6,7 +6,10 @@
     %title= content_for?(:title) ? yield(:title) : 'Cobweb'
     %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Cobweb'}"}
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css"
+
     = javascript_include_tag "application", "data-turbolinks-track" => true
+    = javascript_include_tag "http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"
     = csrf_meta_tags
   %body
     %header
