@@ -17,7 +17,7 @@ class BuildingsController < ApplicationController
     @building.user = current_user
     if @building.save
       if params[:commit]
-        redirect_to building_energy_profile_path(@building), notice: "The building has been saved. Please enter energy consumption data."
+        redirect_to building_energy_profiles_path(@building), notice: "The building has been saved. Please enter energy consumption data."
       else
         redirect_to action: 'new'
       end

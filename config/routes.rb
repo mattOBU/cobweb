@@ -12,12 +12,12 @@ Cobweb::Application.routes.draw do
 
   resources :buildings do
     get 'search', on: :collection
-    resource :energy_profile, except: [ :new ]
+    resources :energy_profiles, except: [ :new ]
   end
   resources :building_groups do
     get 'search', on: :collection
   end
- 
+
   namespace :explore do
     resources :buildings, only: [:index, :create]
     resources :building_groups, only: [:index, :create]

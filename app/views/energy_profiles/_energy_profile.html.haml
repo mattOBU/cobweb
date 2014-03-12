@@ -1,0 +1,118 @@
+= form_for @building_energy_profile, url: building_energy_profiles_path(building: @building), remote: true, html: { "data-dirty" => false } do |f|
+  = f.hidden_field :granularity
+  .row.select-profile
+    .col-md-6
+      .form-group
+        = f.select :profile_type, options_for_select(profile_types), {}, { class: "form-control" }
+        = f.label :profile_type, label
+    .col-md-6
+      .form-group
+        = f.select :profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+        = f.label :profile_accuracy, "Select accuracy"
+  .row
+    .tab-content
+      .tab-pane.yearly-data
+        .form-group
+          .col-md-6
+            = f.label :yearly_value
+          .col-md-6
+            = f.text_field :yearly_value, class: "form-control"
+      .tab-pane.quarterly-data
+        .col-md-6
+          .form-group
+            = f.label :q1_value
+        .col-md-6
+          .form-group
+            = f.text_field :q1_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :q2_value
+        .col-md-6
+          .form-group
+            = f.text_field :q2_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :q3_value
+        .col-md-6
+          .form-group
+            = f.text_field :q3_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :q4_value
+        .col-md-6
+          .form-group
+            = f.text_field :q4_value, class: "form-control"
+      .tab-pane.monthly-data
+        .col-md-6
+          .form-group
+            = f.label :m01_value
+        .col-md-6
+          .form-group
+            = f.text_field :m01_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m02_value
+        .col-md-6
+          .form-group
+            = f.text_field :m02_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m03_value
+        .col-md-6
+          .form-group
+            = f.text_field :m03_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m04_value
+        .col-md-6
+          .form-group
+            = f.text_field :m04_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m05_value
+        .col-md-6
+          .form-group
+            = f.text_field :m05_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m06_value
+        .col-md-6
+          .form-group
+            = f.text_field :m06_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m07_value
+        .col-md-6
+          .form-group
+            = f.text_field :m07_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m08_value
+        .col-md-6
+          .form-group
+            = f.text_field :m08_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m09_value
+        .col-md-6
+          .form-group
+            = f.text_field :m09_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m10_value
+        .col-md-6
+          .form-group
+            = f.text_field :m10_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m11_value
+        .col-md-6
+          .form-group
+            = f.text_field :m11_value, class: "form-control"
+        .col-md-6
+          .form-group
+            = f.label :m12_value
+        .col-md-6
+          .form-group
+            = f.text_field :m12_value, class: "form-control"
+

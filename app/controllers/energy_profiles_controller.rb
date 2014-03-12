@@ -2,7 +2,7 @@ class EnergyProfilesController < ApplicationController
 
   before_filter :load_building
 
-  def show
+  def index
     @building_energy_profile = get_energy_profile
 
     render :edit
@@ -20,11 +20,12 @@ class EnergyProfilesController < ApplicationController
 
   private
 
+  # TODO: handle multiple energy profiles
   def get_energy_profile
-    if @building.building_energy_profile
-      @building.building_energy_profile
+    if @building.energy_profiles.count > 0
+      @building.energy_profiles.first
     else
-      @building.build_building_energy_profile
+      @building.energy_profiles.build
     end
   end
 
@@ -36,7 +37,7 @@ class EnergyProfilesController < ApplicationController
 
   def energy_profile_params
     params.
-      require(:building_energy_profile).
+      require(:energy_profile).
       permit!
   end
 
