@@ -63,8 +63,10 @@ class Calculators::BuildingCalculator
       return "yearly"
     elsif granularities.include?("quarterly")
       return "quarterly"
-    else
+    elsif granularities.include?("monthly")
       return "monthly"
+    else # should not be necessary, but
+      return "yearly"
     end
   end
 
