@@ -3,6 +3,9 @@ class Explore::BuildingGroupsController < ApplicationController
     end
 
     def create
-      render json: {buildings: [{ name: "our house", :annual => [{year: 2013, kWhm2: 128.1, kgCO2em2: 71.6, kWhocc: 3258.8, kgCO2eocc: 1820.5, mains: 115658, producedUsed: 41961, producedExported: 9167}] }]}
+      render json: {query: params.inspect, table: []} and return if params[:building_groups].nil?
+      @building_groups = BuildingGroup.find(*params[:building_groups])
+      calc = Calculators::BuildingGroupCalculator.new(@building_groups, {metrics: params[:metrics], fossil_fuels: params["fossil_fuels"], consumption_export: params[:electricity_consumption_export]})
+      render json: {query: params.inspect, table: calc.table_data}
     end
 end

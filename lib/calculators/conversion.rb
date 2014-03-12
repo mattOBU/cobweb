@@ -23,20 +23,31 @@ class Calculators::Conversion
 # converting to kgCO2e / kWh
   def self.emission_factor(fuel)
     case fuel
-    when "electricity"
+    when "imported electricity consumption", "generated electricity consumption", "exported electricity"
       0.569737
-    when "gas"
+    when "natural gas"
       56.1051/KWH_IN_TJ
     when "oil"
       74.1106/KWH_IN_TJ
-    when "lpg"
+    when "LPG"
       63.1051/KWH_IN_TJ
     when "anthracite"
       98.3115/KWH_IN_TJ
-    when "pellets"
+    when "wood pellets"
       112.304/KWH_IN_TJ
     else
       0
     end 
+  end
+
+  def self.to_kWh(value, unit)
+    case unit
+    when "MWh"
+      value*1000
+    when "GWh"
+      value*1000000
+    when "kWh"
+      value
+    end
   end
 end
