@@ -1,6 +1,6 @@
 class Building < ActiveRecord::Base
 
-  scope :missing_energy_profile, -> { joins(:building_energy_profiles).where("building_energy_profiles.id IS NULL") }
+  # scope :missing_energy_profile, -> { joins(:building_energy_profiles).where("building_energy_profiles.id IS NULL") }
 
   geocoded_by :postcode
   after_validation :geocode, if: -> (obj) {
@@ -10,31 +10,7 @@ class Building < ActiveRecord::Base
   has_many :energy_profiles, class_name: "BuildingEnergyProfile"
 
   def address
-    "#{street_number} #{street_name}, #{postcode} #{city}"
-  end
-
-  def co2_m2
-    rand(100)
-  end
-
-  def co2_occupant
-    rand(100)
-  end
-
-  def kwh_m2
-    rand(100)
-  end
-
-  def kwh_occupant
-    rand(100)
-  end
-
-  def gbp_m2
-    rand(100)
-  end
-
-  def gbp_occupant
-    rand(100)
+    "#{name}, #{street_number} #{street_name}, #{postcode} #{city}"
   end
 
   def search_json

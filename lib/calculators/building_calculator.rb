@@ -12,18 +12,25 @@ class Calculators::BuildingCalculator
 
   def table_data
     @buildings.reduce([]) do |table, b|
-      table << energy_row(b)
+      if b.energy_profiles.size > 0
+        table << energy_row(b)
+      end
+      table
     end
   end
 
-  # table data: aggregated to yearly figure
+  # table data: aggregated to yearly figure and adding all energy sources together per building
   def energy_row(building)
-    energy_profile = building.building_energy_profile
+    energy_profiles = building.energy_profiles
     table_data = {name: building.name}
-    consumption, fossil_fuel = energy_profile.yearly_data
-    energy_numbers = calculate(consumption, fossil_fuel, energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
-    table_data = table_data.merge({year: energy_profile.year}).merge(energy_numbers)
-    table_data
+    total_energy = energy_profiles.reduce(0) do |energy, profile|
+      energy += (profile.yearly_data || 0)
+    end
+    total_emission = energy_profiles.reduce(0) do |emission, profile|
+      emission += Calculators::Conversion.kgCO2_from_kWh(profile.profile_type, profile.yearly_data || 0)
+    end
+    table_data.merge({year: energy_profiles.first.year})
+              .merge(calculate(total_energy, total_emission, building.floor_area, building.number_of_occupants))
   end
 
   # either:
@@ -32,11 +39,11 @@ class Calculators::BuildingCalculator
   # granularity is monthly
   # there's more than one building: compare at the largest granularity
   def graph_data
-    granularity = largest_granularity(@buildings.map {|b| b.building_energy_profile.present? ? b.building_energy_profile.granularity : "monthly" })
-    graph = @buildings.reduce([]) do |graph_rows, b|
-      graph_rows.concat(graph_rows(b, granularity))
+    granularity = largest_granularity(@buildings)
+    graph = @buildings.reduce([]) do |graphr, b|
+      graphr.concat(graph_rows(b, granularity))
     end 
-    {metrics: @options[:metrics], fossil_fuels: @options[:fossil_fuels], time_unit: time_unit(granularity)}.merge({data: graph})
+    {metrics: @options[:metrics], time_unit: time_unit(granularity)}.merge({data: graph})
   end
 
   def time_unit(granularity)
@@ -50,8 +57,8 @@ class Calculators::BuildingCalculator
     end
   end
 
-  def largest_granularity(gr)
-    granularities = gr.uniq
+  def largest_granularity(buildings)
+    granularities = buildings.map { |b| b.energy_profiles.map { |p| p.granularity }}.uniq
     if granularities.include?("yearly")
       return "yearly"
     elsif granularities.include?("quarterly")
@@ -68,24 +75,37 @@ class Calculators::BuildingCalculator
   # or
   # [{quarter: yyy, building-name:...
   def graph_rows(building, granularity)
-    energy_profile = building.building_energy_profile
-    return [] if energy_profile.nil?
+puts "HERE!!!"
+    energy_profiles = building.energy_profiles
+puts energy_profiles.size
+    energy_profiles.reduce([]) do |rows, energy_profile|
+      rows.concat(energy_profile_rows(building, energy_profile, granularity))
+puts "HERE"
+      puts energy_profile_rows(building, energy_profile, granularity)
+      rows
+    end
+  end
+
+  def energy_profile_rows(building, energy_profile, granularity)
     case granularity
     when "monthly"
-      consumption, fossil_fuel = energy_profile.monthly_data
+      consumption = energy_profile.monthly_data
       calculated_data = consumption.reduce([]) do |memo, (key, value)|
-        calculated_values = calculate(value, fossil_fuel[key], energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
+        emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, value)
+        calculated_values = calculate(value, emission, building.floor_area, building.number_of_occupants)
         memo.concat(graph_row(calculated_values, building, {:month => key}))
       end
     when "quarterly"
-      consumption, fossil_fuel = energy_profile.quarterly_data
+      consumption = energy_profile.quarterly_data
       calculated_data = consumption.reduce([]) do |memo, (key, value)|
-        calculated_values = calculate(value, fossil_fuel[key], energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
+        emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, value)
+        calculated_values = calculate(value, emission, building.floor_area, building.number_of_occupants)
         memo.concat(graph_row(calculated_values, building, {:quarter => key}))
       end
     when "yearly"
-      consumption, fossil_fuel = energy_profile.yearly_data
-      calculated_data = calculate(consumption, fossil_fuel, energy_profile.fossil_fuel_type, building.floor_area, building.number_of_occupants)
+      consumption = energy_profile.yearly_data
+      emission = Calculators::Conversion.kgCO2_from_kWh(energy_profile.profile_type, consumption)
+      calculated_data = calculate(consumption, emission, building.floor_area, building.number_of_occupants)
       graph_row(calculated_data, building, {:year => energy_profile.year})
     end
   end
@@ -99,15 +119,16 @@ class Calculators::BuildingCalculator
     end
   end
 
-  def calculate(electricity_kwh, fossil_fuel_kwh, fossil_fuel_type, area, occupants)
-    total_kWh = electricity_kwh + fossil_fuel_kwh
+  # for table: sum all the values of the kwh, sum all the converted values for co2, and then divide those by m2 and occ
+  # for graphs we need the individual numbers
+
+
+  def calculate(total_kWh, total_kgCO2e, area, occupants)
     kWh_m2 = (total_kWh/area).round(2)
     kWh_occ = (total_kWh/occupants).round(2)
-
-    total_kgCO2e = Calculators::Conversion.kgCO2_from_kWh("electricity", electricity_kwh) + Calculators::Conversion.kgCO2_from_kWh(fossil_fuel_type, fossil_fuel_kwh)
     kgCO2e_m2 = (total_kgCO2e/area).round(2)
     kgCO2e_occ = (total_kgCO2e/occupants).round(2)
-
     {kWh_m2: kWh_m2, kWh_occ: kWh_occ, kgCO2e_m2: kgCO2e_m2, kgCO2e_occ: kgCO2e_occ}
   end
+
 end

@@ -23,8 +23,10 @@ class Calculators::Conversion
 # converting to kgCO2e / kWh
   def self.emission_factor(fuel)
     case fuel
-    when "imported electricity consumption", "generated electricity consumption", "exported electricity"
+    when "imported electricity consumption"
       0.569737
+    when  "generated electricity consumption", "exported electricity"
+      0
     when "natural gas"
       56.1051/KWH_IN_TJ
     when "oil"
