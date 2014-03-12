@@ -1,6 +1,6 @@
 class Building < ActiveRecord::Base
 
-  # scope :missing_energy_profile, -> { joins(:building_energy_profiles).where("building_energy_profiles.id IS NULL") }
+  scope :missing_energy_profile, -> { joins("LEFT OUTER JOIN building_energy_profiles ON buildings.id = building_energy_profiles.building_id").where("building_energy_profiles.id IS NULL") }
 
   geocoded_by :postcode
   after_validation :geocode, if: -> (obj) {
