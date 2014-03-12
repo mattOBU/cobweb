@@ -1,12 +1,12 @@
 class BuildingsController < ApplicationController
 
   def index
-    @buildings = current_user.buildings.missing_energy_profile
+    @buildings = current_user.buildings
     render action: :edit
   end
 
   def new
-    @buildings = current_user.buildings.missing_energy_profile
+    @buildings = current_user.buildings
     @building = Building.new
     render action: :edit
   end
@@ -28,7 +28,7 @@ class BuildingsController < ApplicationController
   end
 
   def edit
-    @buildings = current_user.buildings.missing_energy_profile
+    @buildings = current_user.buildings
     @building = Building.find(params[:id])
     authorize! :write, @building
   end
