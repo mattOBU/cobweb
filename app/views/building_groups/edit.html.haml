@@ -122,6 +122,8 @@
               = p.text_field energy_detail, class: "form-control"
               = p.select "#{energy_detail}_unit", options_for_select(["kWh", "MWh", "GWh"]), {}, { class: "form-control input-sm" }
               = p.select "#{energy_detail}_accuracy", options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control input-sm"}
+              - if ["fossil_1_consumption", "fossil_2_consumption"].include? energy_detail
+                = p.select "#{energy_detail}_type", options_for_select(BuildingEnergyProfile::FOSSIL_FUEL_TYPES), {}, { class: "form-control input-sm" }
 
     .col-md-2
       = f.submit "Save", class: "btn btn-primary"

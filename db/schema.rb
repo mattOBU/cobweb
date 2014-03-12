@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311205909) do
+ActiveRecord::Schema.define(version: 20140312160705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(version: 20140311205909) do
     t.string   "fossil_2_consumption_accuracy"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "fossil_1_consumption_type"
+    t.string   "fossil_2_consumption_type"
   end
 
   create_table "memberships", force: true do |t|
