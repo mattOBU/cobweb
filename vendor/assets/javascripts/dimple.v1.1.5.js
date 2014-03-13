@@ -3024,7 +3024,7 @@ var dimple = {
             // Position the text relatve to the bubble, the absolute positioning
             // will be done by translating the group
             t.selectAll("text")
-             //   .attr('class', 'label')
+                .attr('class', 'label') // hack hack hack
                 .attr("x", 0)
                 .attr("y", function () {
                     // Increment the y position
