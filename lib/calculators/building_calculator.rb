@@ -58,7 +58,7 @@ class Calculators::BuildingCalculator
   end
 
   def largest_granularity(buildings)
-    granularities = buildings.map { |b| b.energy_profiles.map { |p| p.granularity }}.uniq
+    granularities = buildings.map { |b| b.energy_profiles.map { |p| p.granularity }}.flatten.uniq
     if granularities.include?("yearly")
       return "yearly"
     elsif granularities.include?("quarterly")
