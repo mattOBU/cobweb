@@ -73,4 +73,19 @@
               = f.submit "Enter Data", class: "btn btn-primary"
 
   = button_to_function "New Building", "submitFormAndCreateNew('#{new_building_url}')", class: "btn btn-primary"
+:javascript
+  var submitFormAndCreateNew = function(url) {
+    var buildingForm = $('form#new_building');
 
+    if (buildingForm.length > 0) {
+      buildingForm.submit();
+    } else {
+      window.location = url;
+    }
+  };
+
+  jQuery(document).ready(function($) {
+    $('button#new_building').on('click', function() {
+      submitFormAndCreateNew("#{new_building_url}");
+    });
+  });
