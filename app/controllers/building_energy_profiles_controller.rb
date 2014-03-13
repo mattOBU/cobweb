@@ -36,7 +36,7 @@ class BuildingEnergyProfilesController < ApplicationController
   def get_profile_by_type(profile_type)
       @building.
         energy_profiles.
-        find_or_initialize_by_profile_type(profile_type)
+        find_or_initialize_by(profile_type: profile_type)
   end
 
   def load_building
