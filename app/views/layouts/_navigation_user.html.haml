@@ -9,7 +9,7 @@
       %li.divider
       %li
         = link_to "Logout", destroy_user_session_path, method: 'delete'
-  -#
+  - if current_user.roles.count > 1
     %li.dropdown
       %a.dropdown-toggle{ href: "#", :"data-toggle" => "dropdown" }
         = current_role.humanize
@@ -17,7 +17,8 @@
       %ul.dropdown-menu
         - current_user.roles.each do |role|
           %li
-            = link_to role.name.humanize, "/roles/switch/#{role.id}"
-  %li
-    %p.navbar-text
-      = current_role.humanize
+            = link_to role.name.humanize, switch_role_path(role.name)
+  - else
+    %li
+      %p.navbar-text
+        = current_role.humanize
