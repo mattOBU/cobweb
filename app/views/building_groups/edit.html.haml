@@ -37,59 +37,19 @@
         .tab-pane#residential-sector
           %p
             Please select a building category if applicable:
-          %ul
-            %li
-              = f.radio_button "category", "single-family"
-              Single Family
-            %li
-              = f.radio_button "category", "multi-family"
-              Multi Family
+          %ul.list-unstyled
+            - BuildingCategory.with_sector("residential").each do |cat|
+              %li
+                = f.radio_button "category", cat.slug
+                = f.label "category", cat.description
         .tab-pane#non-residential-sector
           %p
             Please select a building category if applicable:
-          %ul
-            %li
-              = f.radio_button "category", "office"
-              Office
-            %li
-              = f.radio_button "category", "hotel"
-              Hotel
-            %li
-              = f.radio_button "category", "storage"
-              Warehouse/storage
-            %li
-              = f.radio_button "category", "mercantile"
-              Mercantile/service
-            %li
-              = f.radio_button "category", "food-service"
-              Food service
-            %li
-              = f.radio_button "category", "entertainment"
-              Entertainment
-            %li
-              = f.radio_button "category", "education"
-              Education
-            %li
-              = f.radio_button "category", "healthcare"
-              Healthcare
-            %li
-              = f.radio_button "category", "public-order"
-              Public order
-            %li
-              = f.radio_button "category", "public-assembly"
-              Public assembly
-            %li
-              = f.radio_button "category", "institutional-lodging"
-              Institutional lodging
-            %li
-              = f.radio_button "category", "other-institutional"
-              Other institutional
-            %li
-              = f.radio_button "category", "mixed-use"
-              Mixed-use buildings
-            %li
-              = f.radio_button "category", "other-commercial"
-              Other commercial
+          %ul.list-unstyled
+            - BuildingCategory.with_sector("non-residential").each do |cat|
+              %li
+                = f.radio_button "category", cat.slug
+                = f.label "category", cat.description
 
     .col-md-3
       .form-group
