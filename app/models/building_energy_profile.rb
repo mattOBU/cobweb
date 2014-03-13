@@ -26,10 +26,10 @@ class BuildingEnergyProfile < ActiveRecord::Base
   def yearly_data
     case granularity
     when "monthly"
-      m01_value + m02_value + m03_value + m04_value + m05_value + m06_value +
-      m07_value + m08_value + m09_value + m10_value + m11_value + m12_value
+      [ m01_value , m02_value , m03_value , m04_value , m05_value , m06_value ,
+      m07_value , m08_value , m09_value , m10_value , m11_value , m12_value].map {|v| zero_default(v) }.reduce(:+)
     when "quarterly"
-      q1_value + q2_value + q3_value + q4_value
+      [q1_value, q2_value, q3_value, q4_value].map {|v| zero_default(v) }.reduce(:+)
     else
       yearly_value
     end
@@ -38,10 +38,10 @@ class BuildingEnergyProfile < ActiveRecord::Base
   def quarterly_data
     case granularity
     when "monthly"
-      {q1: m01_value + m02_value + m03_value,
-       q2: m04_value + m05_value + m06_value,
-       q3: m07_value + m08_value + m09_value,
-       q4: m10_value + m11_value + m12_value}
+      {q1: [m01_value, m02_value, m03_value].map {|v| zero_default(v) }.reduce(:+),
+       q2: [m04_value, m05_value, m06_value].map {|v| zero_default(v) }.reduce(:+),
+       q3: [m07_value, m08_value, m09_value].map {|v| zero_default(v) }.reduce(:+),
+       q4: [m10_value, m11_value, m12_value].map {|v| zero_default(v) }.reduce(:+) }
     when "quarterly"
       {q1: q1_value, q2: q2_value, q3: q3_value, q4: q4_value}
     end
@@ -50,5 +50,9 @@ class BuildingEnergyProfile < ActiveRecord::Base
   def monthly_data
     {Jan: m01_value, Feb: m02_value, Mar: m03_value, Apr: m04_value, May: m05_value, Jun: m06_value,
      Jul: m07_value, Aug: m08_value, Sep: m09_value, Oct: m10_value, Nov: m11_value, Dec: m12_value}
+  end
+
+  def zero_default(number)
+    number || 0
   end
 end
