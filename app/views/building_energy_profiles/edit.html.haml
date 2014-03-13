@@ -29,16 +29,16 @@
         = label_tag :electricity_profile_type, "Select electricity consumption / export"
     .col-md-2
       .form-group
-        = select_tag :profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), class: "form-control"
-        = label_tag :profile_accuracy, "Select accuracy"
+        = select_tag :electricity_profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), class: "form-control"
+        = label_tag :electricity_profile_accuracy, "Select accuracy"
     .col-md-2
       .form-group
         = select_tag :fossil_fuel_profile_type, options_for_select(BuildingEnergyProfile::FOSSIL_FUEL_TYPES),  class: "form-control"
         = label_tag :fossil_fuel_profile_type, "Select fossil fuel"
     .col-md-2
       .form-group
-        = select_tag :profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), class: "form-control"
-        = label_tag :profile_accuracy, "Select accuracy"
+        = select_tag :fossil_fuel_profile_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), class: "form-control"
+        = label_tag :fossil_fuel_profile_accuracy, "Select accuracy"
 
   .row
     -# FIXME: we could possibly split this up in the controller...
