@@ -3,7 +3,7 @@
   %p.lead
     Common building energy platform on the web
 
-  %img.img-thumbnail{ src: "http://placehold.it/500x500" }
+  = image_tag "home.jpg"
 
   = render template: '/devise/sessions/new'
 
@@ -20,7 +20,7 @@
         %li Social housing providers, organisation with large property portfolios, facilities managers and even community groups can understand energy profile of own stock.
         %li Linking property level geo-data with real time smart metering data can significantly enhance the management of energy systems and the participation of consumers within it.
 
-    %img.img-thumbnail{ src: "http://placehold.it/500x250" }
+    = image_tag "map.jpg"
 
 .col-md-6
   %p.lead
@@ -28,13 +28,12 @@
   .col-md-4
     %h4 Local Authority
 
-    %ul
+    %ul.list-unstyled
       %li Sustainability Manager or team
       %li Energy Manager or team
       %li Local authority housing manager or team
       %li Local authority school manager or team
 
-    = link_to "Sign up", new_user_registration_path(role: "local_authority"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Landlord
@@ -42,28 +41,35 @@
     %p
       (multiple buildings)
 
-    %ul
+    %ul.list-unstyled
       %li Housing provider
       %li Private or domestic landlord or developer
       %li Private commercial landlord or developer
 
-    = link_to "Sign up", new_user_registration_path(role: "landlord"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Community Group
 
-    %ul
+    %ul.list-unstyled
       %li Local business partnership
       %li Local retrofit partnership
       %li Fuel poverty agency
       %li Neighbourhood or district low carbon / sustainability group
 
+
+.col-md-6
+  .col-md-4
+    = link_to "Sign up", new_user_registration_path(role: "local_authority"), class: "btn btn-primary pull-right"
+  .col-md-4
+    = link_to "Sign up", new_user_registration_path(role: "landlord"), class: "btn btn-primary pull-right"
+  .col-md-4
     = link_to "Sign up", new_user_registration_path(role: "community_group_administrator"), class: "btn btn-primary pull-right"
 
+.col-md-6
   .col-md-4
     %h4 Householder
 
-    %ul
+    %ul.list-unstyled
       %li Homeowner
       %li Tenant
 
@@ -71,24 +77,35 @@
       Sign up here whether you were invited by a community
       group or simply want to keep track of your energy use.
 
-    = link_to "Sign up", new_user_registration_path(role: "homeowner"), class: "btn btn-primary pull-right"
-
   .col-md-4
     %h4 Business
 
-    %ul
+    %ul.list-unstyled
       %li Business in a single location (tenant or owner)
       %li Landlord of a single building
 
-    = link_to "Sign up", new_user_registration_path(role: "business"), class: "btn btn-primary pull-right"
 
   .col-md-4
     %h4 Retrofit Provider
 
-    %ul
+    %ul.list-unstyled
       %li Energy company with emissions reduction obligation
       %li Green Deal provider
       %li Retrofit Installer
       %li Heat network provider or developer
 
+.col-md-6
+  .col-md-4
+    = link_to "Sign up", new_user_registration_path(role: "homeowner"), class: "btn btn-primary pull-right"
+  .col-md-4
+    = link_to "Sign up", new_user_registration_path(role: "business"), class: "btn btn-primary pull-right"
+  .col-md-4
     = link_to "Sign up", new_user_registration_path(role: "retrofit_provider"), class: "btn btn-primary pull-right"
+
+.col-md-12
+  .credits
+    Financially supported by the
+    =image_tag "TSB_set_logo.png", :class => "TSB"
+    \- Future Cities Solutions
+    = image_tag "brookes.png"
+    = image_tag "RTA_logo.jpg"

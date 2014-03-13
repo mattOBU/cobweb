@@ -1,3 +1,24 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+img {
+  border: 1px solid #021a40;
+}
+
+.credits {
+  font-style: italic;
+}
+.credits img.TSB {
+  display: inline;
+  border: none;
+  vertical-align: top;
+  background: grey;
+  padding: 5px;
+}
+
+.credits img {
+  height: 50px;
+  border: none;
+  display: inline;
+}
