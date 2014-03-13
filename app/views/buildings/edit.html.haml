@@ -18,10 +18,11 @@
         %th
           %abbr{ title: "Floor Area accuracy" } Accuracy
         %th Category
+        %th Group
     %tbody
       - @buildings.each do |building|
         %tr
-          %td= building.name
+          %td= link_to building.name, edit_building_path(building)
           %td= building.street_number
           %td= building.street_name
           %td= building.city
@@ -32,6 +33,8 @@
           %td= building.floor_area
           %td= building.area_accuracy
           %td= building.category
+          %td= building.group_name
+          %td= link_to "Enter Data", building_building_energy_profiles_path(building_id: building.id), class: "btn btn-primary"
 
       - if @building
         = form_for @building do |f|
@@ -41,38 +44,43 @@
               = f.text_field :name, class: "form-control input-sm", placeholder: "Building Name"
             %td
               = f.label :street_number, class: "sr-only"
-              = f.text_field :street_number, class: "form-control", placeholder: "Street Number"
+              = f.text_field :street_number, class: "form-control input-sm", placeholder: "Street Number"
             %td
               = f.label :street_name, class: "sr-only"
-              = f.text_field :street_name, class: "form-control", placeholder: "Street Name"
+              = f.text_field :street_name, class: "form-control input-sm", placeholder: "Street Name"
             %td
               = f.label :city, class: "sr-only"
-              = f.text_field :city, class: "form-control", placeholder: "City"
+              = f.text_field :city, class: "form-control input-sm", placeholder: "City"
             %td
               = f.label :postcode, class: "sr-only"
-              = f.text_field :postcode, class: "form-control", placeholder: "Postcode"
+              = f.text_field :postcode, class: "form-control input-sm", placeholder: "Postcode"
             %td
               = f.label :year_of_construction, class: "sr-only"
-              = f.text_field :year_of_construction, class: "form-control", placeholder: "Year of Construction"
+              = f.text_field :year_of_construction, class: "form-control input-sm", placeholder: "Year of Construction"
             %td
               = f.label :number_of_occupants, class: "sr-only"
-              = f.text_field :number_of_occupants, class: "form-control", placeholder: "# of occupants"
+              = f.text_field :number_of_occupants, class: "form-control input-sm", placeholder: "# of occupants"
             %td
               = f.label :occupants_accuracy, class: "sr-only"
-              = f.select :occupants_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+              = f.select :occupants_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control input-sm" }
             %td
               = f.label :floor_area, class: "sr-only"
-              = f.text_field :floor_area, class: "form-control", placeholder: "floor area"
+              = f.text_field :floor_area, class: "form-control input-sm", placeholder: "floor area"
             %td
               = f.label :area_accuracy, class: "sr-only"
-              = f.select :area_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control" }
+              = f.select :area_accuracy, options_for_select(["metered", "modelled", "certified", "estimated"]), {}, { class: "form-control input-sm" }
             %td
               = f.label :category, class: "sr-only"
-              = f.select :category, BuildingCategory.all.map { |c| [c.selector, c.id] }, { include_blank: true }, class: "form-control"
+              = f.select :category, BuildingCategory.all.map { |c| [c.selector, c.slug] }, { include_blank: true, selected: @building.category }, class: "form-control input-sm"
+            %td
+              = f.label :group_name, class: "sr-only"
+              = f.text_field :group_name, class: "form-control input-sm", placeholder: "group"
             %td
               = f.submit "Enter Data", class: "btn btn-primary"
 
-  = button_to_function "New Building", "submitFormAndCreateNew('#{new_building_url}')", class: "btn btn-primary"
+  %button.btn.btn-primary
+    New Building
+
 :javascript
   var submitFormAndCreateNew = function(url) {
     var buildingForm = $('form#new_building');
