@@ -5,6 +5,8 @@ Cobweb::Application.routes.draw do
   }
   resources :users
 
+  get 'role/:role', to: 'roles#switch', as: :switch_role
+
   resources :community_groups do
     get 'search', on: :collection
     resources :applications, controller: 'community_group_applications'
