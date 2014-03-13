@@ -1,7 +1,6 @@
-= link_to new_building_group_path do
-  .panel.panel-default
-    .panel-heading
-      %h4 I want to enter or upload aggregated energy features
-    .panel-body
-      Enter annual aggregated data for stock or sector averages
+.panel.panel-default
+  .panel-body
+    %h4 I want to enter or upload aggregated energy features
+    %a{:href => new_building_group_url, type:"button", :class => "btn btn-primary", :data => {:toggle => "tooltip", :placement => "bottom"}, :title => "Enter annual aggregated data for stock or sector averages"} Enter
+
 

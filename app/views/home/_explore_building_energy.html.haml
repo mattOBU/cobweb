@@ -1,13 +1,4 @@
-= link_to explore_buildings_path do
-  .panel.panel-default
-    .panel-heading
-      %h4 Explore energy consumption of individual buildings
-    .panel-body
-      %p
-        View and report on building energy use
-      %p
-        Isolate large consumers within own building stock
-      %p
-        Confirm compliance with energy standards
-
-
+.panel.panel-default
+  .panel-body
+    %h4 Explore energy consumption of individual buildings
+    %a{:href => explore_buildings_url, type:"button", :class => "btn btn-primary", :data => {:toggle => "tooltip", :placement => "bottom"}, :title => "View and report on building energy use. Isolate large consumers within own building stock. Confirm compliance with energy standards"} Enter

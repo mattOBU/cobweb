@@ -1,7 +1,5 @@
-= link_to manage_community_groups_path do
-  .panel.panel-danger
-    .panel-heading
-      %h4 Manage Cobweb
-    .panel-body
-      Access the admin area
+.panel.panel-danger
+  .panel-heading
+    %h4 Manage Cobweb
+    %a{:href => manage_community_groups_url, type:"button", :class => "btn btn-primary", :data => {:toggle => "tooltip", :placement => "bottom"}, :title => "Access the admin area"} Enter
 
