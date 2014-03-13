@@ -28,13 +28,18 @@ module ApplicationHelper
     role_order = %w( local_authority retrofit_provider
                   landlord community_group_administrator
                   homeowner business )
-    current_user.
-      roles.
-      map(&:name).
-      uniq.
-      select { |role| role_order.include? role }.
-      sort_by { |role| role_order.index(role) }.
-      first
+    @current_role ||=
+      if session[:current_role]
+        session[:current_role]
+      else
+        current_user.
+          roles.
+          map(&:name).
+          uniq.
+          select { |role| role_order.include? role }.
+          sort_by { |role| role_order.index(role) }.
+          first
+      end
   end
 
   def is_business?
