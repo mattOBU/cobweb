@@ -1,16 +1,17 @@
-.panel.panel-default
-  .panel-heading
-    %h4
-      I want to enter or upload energy data for
-      - if is_homeowner?
-        my home
-      - elsif is_business?
-        my business
-      - else
-        individual buildings
-  .panel-body
-    Enter annual, quarterly or monthly data
-    - unless is_homeowner? || is_business?
-      for individual buildings
+= link_to new_building_path do
+  .panel.panel-default
+    .panel-heading
+      %h4
+        I want to enter or upload energy data for
+        - if is_homeowner?
+          my home
+        - elsif is_business?
+          my business
+        - else
+          individual buildings
+    .panel-body
+      Enter annual, quarterly or monthly data
+      - unless is_homeowner? || is_business?
+        for individual buildings
 
 
