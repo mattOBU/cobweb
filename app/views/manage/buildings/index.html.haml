@@ -12,9 +12,9 @@
         %tr{ :"data-longitude" => building.longitude, :"data-latitude" => building.latitude }
           %td= link_to building.name, edit_building_path(building)
           %td= building.address
-          %td= "group?" #building.building_groups.name
+          %td= building.group_name
 
-  %h4 Building groups
+  %h4 Aggregated Groups
 
   %table.table.table-striped
     %thead
@@ -25,7 +25,7 @@
     %tbody
       - @building_groups.each do |building_group|
         %tr{ :"data-longitude" => building_group.longitude, :"data-latitude" => building_group.latitude }
-          %td= building_group.name
+          %td= link_to building_group.name, edit_building_group_path(building_group)
           %td
             = building_group.sector
             = building_group.category == "all" ? "" : "(#{building_group.category})"
