@@ -25,7 +25,7 @@
           %td= housing_provider.location
           %td= housing_provider.buildings.count
           %td
-            = link_to housing_provider.name_or_email, "/contact"
+            = mail_to housing_provider.email, housing_provider.name_or_email
 
 .col-md-4
 

@@ -24,7 +24,7 @@
           %td= retrofit_provider.location
           %td= retrofit_provider.buildings.count
           %td
-            = link_to retrofit_provider.name_or_email, "/contact"
+            = mail_to retrofit_provider.email, retrofit_provider.name_or_email
 
 .col-md-4
 

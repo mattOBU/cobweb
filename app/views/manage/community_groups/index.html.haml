@@ -26,7 +26,7 @@
           %td= community_group.buildings.count
           %td
             - if community_group.admins.any?
-              = link_to community_group.contact_name, "/contact"
+              = mail_to community_group.contact_email, community_group.contact_name
             - else
               %span.label.label-danger No Admin
 

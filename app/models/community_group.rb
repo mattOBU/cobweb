@@ -30,6 +30,10 @@ class CommunityGroup < ActiveRecord::Base
     admins.first.name_or_email unless admins.empty?
   end
 
+  def contact_email
+    admins.first.email unless admins.empty?
+  end
+
   def identifier
     "#{self.name}, #{self.location}"
   end
