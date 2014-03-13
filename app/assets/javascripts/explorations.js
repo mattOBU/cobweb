@@ -26,7 +26,7 @@ var graphs = new function() {
   var clear = function() {
     $(".charts").empty();
   }
-  var construct = function(data) {
+  var building = function(data) {
     clear();
 
 console.log(data);
@@ -55,7 +55,7 @@ console.log(data);
   };
 
   return {
-    construct: construct,
+    building: building,
     buildingGroup: buildingGroup
   }
 }();
@@ -141,7 +141,7 @@ jQuery(document).ready(function($) {
         if (data.graph_for == "building-group") {
           graphs.buildingGroup(data.graph);
         } else {
-          graphs.construct(data.graph);
+          graphs.building(data.graph);
         }
       }
     });
