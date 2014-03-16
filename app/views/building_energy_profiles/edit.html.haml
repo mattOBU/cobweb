@@ -3,15 +3,17 @@
 
   .row
     .col-md-6
-      #granularities.btn-group-vertical{"data-toggle" => "buttons"}
+      #granularities.btn-group-vertical{ data: { toggle: "buttons"} }
         %label.btn.btn-primary
-          = radio_button_tag "granularity", "yearly", false, { "data-target" => ".yearly-data", "data-toggle" => "tab" }
+
+          = radio_button_tag "granularity", "yearly", ["yearly", nil].include?(@granularity), { "data-target" => ".yearly-data", "data-toggle" => "tab" }
           Yearly
         %label.btn.btn-primary
-          = radio_button_tag "granularity", "quarterly", false, { "data-target" => ".quarterly-data", "data-toggle" => "tab" }
+          = radio_button_tag "granularity", "quarterly", @granularity == "quarterly", { "data-target" => ".quarterly-data", "data-toggle" => "tab" }
           Quarterly
         %label.btn.btn-primary
-          = radio_button_tag "granularity", "monthly", false, { "data-target" => ".monthly-data", "data-toggle" => "tab" }
+
+          = radio_button_tag "granularity", "monthly", @granularity == "monthly", { "data-target" => ".monthly-data", "data-toggle" => "tab" }
           Monthly
     .col-md-6
       %em pseudo graphs go here
@@ -21,7 +23,7 @@
         = label_tag :year, "Select Year"
     .col-md-2
       .form-group
-        = text_field_tag :year, nil, class: "form-control", placeholder: "Year"
+        = text_field_tag :year, @year, class: "form-control", placeholder: "Year"
   .row.select-profile
     .col-md-2
       .form-group
@@ -52,10 +54,9 @@
 
 :javascript
   var saveDirtyForms = function() {
-    console.log("Looking for dirty forms...");
     $('form.dirty').each(function() {
       //$('#confirm-modal').modal({ backdrop: 'static', keyboard: false});
-      console.log("Saving form...");
+      log("Saving form...");
       $(this).submit();
     });
   }
@@ -65,25 +66,32 @@
   }
 
   var setDirty = function(el) {
-      // set the current form as dirty
-      var thisForm = $(el).parents('form')
-      console.log("Marking form as dirty");
-      thisForm.addClass('dirty');
+    // set the current form as dirty
+    var thisForm = $(el).parents('form')
+    log("Marking form as dirty");
+    thisForm.addClass('dirty');
+  }
+
+  var selectEnergyProfileForm = function(el, scope) {
+    var selectedForm = $('form input[name="building_energy_profile[profile_type]"][value="' + $(el).val() +'"]').parents('form');
+    log("Hide all " + scope + " forms");
+    $(scope + ' form').hide();
+
+    //var granularity = $(selectedForm).find('input[name="building_energy_profile[granularity]"]').val();
+    //log("Setting global granularity element to " + granularity);
+    //$('#granularities input[name=granularity][value="' +
+    //  + granularity +
+    //  '"]').click();
+
+    log("Showing the selected " + scope + " form");
+    $(selectedForm).show();
   }
 
   var selectFossilFuelProfileForm = function(el) {
-    var selectedForm = $('form input[name="building_energy_profile[profile_type]"][value="' + $(el).val() +'"]').parents('form');
-    console.log("Hide all fossil fuel forms");
-    $('.fossil_fuel_profiles form').hide();
-    console.log("Showing the selected fossil fuel form");
-    selectedForm.show();
+    selectEnergyProfileForm(el, '.fossil_fuel_profiles');
   }
   var selectElectricityProfileForm = function(el) {
-    var selectedForm = $('form input[name="building_energy_profile[profile_type]"][value="' + $(el).val() +'"]').parents('form');
-    console.log("Hide all electricity forms");
-    $('.electricity_profiles form').hide();
-    console.log("Showing the selected electricity form");
-    selectedForm.show();
+    selectEnergyProfileForm(el, '.electricity_profiles');
   }
 
   jQuery(document).ready(function($) {
@@ -95,30 +103,33 @@
       var granularity = $(this).find('input').val();
       $(this).find('input').tab('show');
       $('form input[name="building_energy_profile[granularity]"]').val(granularity);
-
     });
 
+    // changing the value of the year text field will set the value of the
+    //   corresponding hidden field for the forms.
     $('#year').on('change', function() {
       var year = $(this).val();
       $('form input[name="building_energy_profile[year]"]').val(year);
     });
 
+    // changing the value of the accuracy select fields will set the value
+    //   of the corresponding hidden field for the forms.
     $('#electricity_profile_accuracy').on('change', function() {
       var accuracy = $(this).val();
-      $('.electricity_profils form input[name="building_energy_profile[profile_accuracy]"]').val(accuracy);
+      $('.electricity_profiles form input[name="building_energy_profile[profile_accuracy]"]').val(accuracy);
     });
-
     $('#fossil_fuel_profile_accuracy').on('change', function() {
       var accuracy = $(this).val();
       $('.fossil_fuel_profiles form input[name="building_energy_profile[profile_accuracy]"]').val(accuracy);
     });
 
-
-    // keep track of changes
-    $('input[type=text]').on('keypress', function() {
+    // keep track of changes - changing any of the text input fields
+    //   in the forms will set the form as dirty
+    $('form input[type=text]').on('keypress', function() {
       setDirty(this);
     });
 
+    // show / hide the active forms
     $('select[name=electricity_profile_type').on('change', function() {
       selectElectricityProfileForm(this);
     });
@@ -126,20 +137,25 @@
       selectFossilFuelProfileForm(this);
     });
 
+    // handle remote form save.
+    //   for now, all activity is logged on the console
     $('form.new_building_energy_profile').on('ajax:success', function(e, data, status, xhr) {
       var thisForm = $('form input[name="building_energy_profile[profile_type]"][value="' + data["profile_type"] + '"]').parents('form');
-      console.log("Energy Profile " + data["profile_type"]);
+      log("Energy Profile " + data["profile_type"]);
       thisForm.removeClass('dirty');
-      console.log("Marking this form as clean");
+      log("Marking this form as clean");
     }).bind('ajax:error', function(e,xhr,status,error) {
-      console.log("Received ajax error");
+      log("Received ajax error");
     });
 
-
     // by default, select 'yearly' granularity
-    if ($('input[name=granularity]:checked').length == 0) {
+    var selectedGranularity = $('input[name=granularity]:checked');
+    if (selectedGranularity.length == 0) {
       $('#granularities .btn:first').click();
+    } else {
+      selectedGranularity.parents('label').click();
     }
+
 
     // select the first electricity profile
     selectElectricityProfileForm($('select[name=electricity_profile_type]')[0]);

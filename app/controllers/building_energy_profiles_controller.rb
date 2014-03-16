@@ -3,7 +3,11 @@ class BuildingEnergyProfilesController < ApplicationController
   before_filter :load_building
 
   def index
-    @building_profiles = get_profiles
+    load_profiles
+
+    set_profiles_granularity
+    set_profiles_year
+
     render :edit
   end
 
@@ -17,18 +21,18 @@ class BuildingEnergyProfilesController < ApplicationController
     end
   end
 
-  def edit
-    @bui
-  end
-
   private
 
   def profile_types
      BuildingEnergyProfile::ELECTRICITY_TYPES + BuildingEnergyProfile::FOSSIL_FUEL_TYPES
   end
 
+  def load_profiles
+    @building_profiles = get_profiles
+  end
+
   def get_profiles
-    profile_types.map do |type|
+    @profiles ||= profile_types.map do |type|
       get_profile_by_type(type)
     end
   end
@@ -43,7 +47,22 @@ class BuildingEnergyProfilesController < ApplicationController
     @building = Building.find(params[:building_id])
   end
 
-  private
+  # naive solution to force a "shared" attribute
+  def find_first_with_attribute(collection, attribute)
+    collection.
+      reject(&:new_record?).
+      find { |profile| profile.send(attribute).present? }
+  end
+
+  def set_profiles_granularity
+    @granularity = find_first_with_attribute(get_profiles, :granularity).
+      try(:granularity)
+  end
+
+  def set_profiles_year
+    @year = find_first_with_attribute(get_profiles, :year).
+      try(:year)
+  end
 
   def energy_profile_params
     params.
