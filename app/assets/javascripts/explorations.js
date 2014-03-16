@@ -29,7 +29,7 @@ var graphs = new function() {
   var building = function(data) {
     clear();
 
-console.log(data);
+log(data);
     var svg = dimple.newSvg(".charts", 430, 400);
     myChart = new dimple.chart(svg, data.data);
     myChart.setBounds(30, 45, 400, 315)
@@ -43,7 +43,7 @@ console.log(data);
   var buildingGroup = function(data) {
     clear();
 
-console.log(data);
+log(data);
     var svg = dimple.newSvg(".charts", 430, 400);
     myChart = new dimple.chart(svg, data.data);
     myChart.setBounds(30, 45, 400, 315)
