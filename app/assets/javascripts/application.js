@@ -20,3 +20,7 @@
 //= require ajax-chosen
 //= require underscore
 //= require_tree .
+
+window.log=function(){if(this.console){console.log(Array.prototype.slice.call(arguments))}};
+
+
