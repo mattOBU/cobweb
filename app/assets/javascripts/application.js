@@ -14,7 +14,6 @@
 //= require dimple.v1.1.5
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap
 //= require chosen.jquery
 //= require ajax-chosen
