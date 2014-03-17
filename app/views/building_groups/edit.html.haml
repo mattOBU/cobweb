@@ -121,9 +121,26 @@
     });
 
     // by default, select 'whole' sector
-    if($('input[name="building_group[category]"]:checked').length == 0) {
+    var selectedCategory = $('input[name="building_group[category]"]:checked');
+    if(selectedCategory.length == 0) {
       $('#categories .btn:first').click();
+    } else {
+      var categoryLabel = selectedCategory.val();
+
+      if ((categoryLabel == "all") || (categoryLabel == "residential") || (categoryLabel == "non-residential")) {
+        selectedCategory.tab('show');
+        selectedCategory.parents('label').addClass('active');
+      } else {
+        var paneId = selectedCategory.parents('.tab-pane').attr('id');
+        log("Looking for tab that triggers " + paneId);
+        $('input[name="building_group[category]"][data-target="#' + paneId + '"]').
+          tab('show').
+          parents('label').addClass('active');
+      }
     }
+
+    // make sure the right tab is chosen by default
+
 
     // checking 'group can be broken down by age group' should show the age groups
     showAgeGroups();
