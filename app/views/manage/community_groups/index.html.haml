@@ -20,7 +20,7 @@
         %th Contact
     %tbody
       - @community_groups.each do |community_group|
-        %tr
+        %tr{ data: { longitude: community_group.longitude, latitude: community_group.latitude } }
           %td= community_group.name
           %td= community_group.location
           %td= community_group.buildings.count
@@ -31,5 +31,5 @@
               %span.label.label-danger No Admin
 
 .col-md-4
+  #map
 
-  %img.img-thumbnail{ src: "http://placehold.it/512x512" }

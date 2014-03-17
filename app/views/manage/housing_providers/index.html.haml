@@ -20,7 +20,8 @@
         %th Contact
     %tbody
       - @housing_providers.each do |housing_provider|
-        %tr
+        %tr{ data: { longitude: housing_provider.longitude, latitude: housing_provider.latitude } }
+
           %td= housing_provider.name
           %td= housing_provider.location
           %td= housing_provider.buildings.count
@@ -28,6 +29,4 @@
             = mail_to housing_provider.email, housing_provider.name_or_email
 
 .col-md-4
-
-  %img.img-thumbnail{ src: "http://placehold.it/512x512" }
-
+  #map

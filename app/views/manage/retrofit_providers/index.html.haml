@@ -19,7 +19,8 @@
         %th Contact
     %tbody
       - @retrofit_providers.each do |retrofit_provider|
-        %tr
+        %tr{ data: { longitude: retrofit_provider.longitude, latitude: retrofit_provider.latitude } }
+
           %td= retrofit_provider.name
           %td= retrofit_provider.location
           %td= retrofit_provider.buildings.count
@@ -27,7 +28,4 @@
             = mail_to retrofit_provider.email, retrofit_provider.name_or_email
 
 .col-md-4
-
-  %img.img-thumbnail{ src: "http://placehold.it/512x512" }
-
-
+  #map
